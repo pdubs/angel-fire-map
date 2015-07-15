@@ -18,7 +18,7 @@ function returnColor(difficulty) {
 app.factory('myService', function($http) {
 	return {
 		getTrailData: function() {
-		    return $http.get('http://45.55.14.136:8000/trails').then(function(result) {
+		    return $http.get('data/trails.geo.json').then(function(result) {
 		    	return result.data;
 		    });
 		}
