@@ -1,3 +1,10 @@
+/*
+easy'#66CD00';
+intermediate'#1ca4d5';
+advanced'#fbf136';
+expert'#eb573a';
+*/
+
 html, body, #map-canvas {
 	height: 100%;
 }
@@ -23,10 +30,10 @@ body {
 #mapControls {
 	position: absolute;
 	margin: 50px 20px 0px 5px;
-	background-color: white;
+	background-color: #ebedea;
 	padding: 0 10px;
 	z-index: 999;
-	opacity: 0.8;
+	opacity: 1;
 }
 
 #mapControls .control {

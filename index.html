@@ -9,14 +9,32 @@
 	<script type="text/javascript" src="js/app.js"></script>
 	<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
 </head>
 <body ng-app="afMap" ng-controller="MainCtrl">
 	<div id="mapControls">
-		<div class="control" ng-repeat="trail in trailParts">
+
+		<div class="control" ng-repeat="trail in eTrails">
 			<div class="trail">
-				<label><input type="checkbox" ng-click="setSelectedTrail(trail)"> {{trail.name}}</label>
+				<label><input type="checkbox" ng-click="setSelectedTrail(trail)">{{ trail.parkID }} - {{trail.name}}</label>
+			</div>
+		</div><br />
+		<div class="control" ng-repeat="trail in iTrails">
+			<div class="trail">
+				<label><input type="checkbox" ng-click="setSelectedTrail(trail)">{{ trail.parkID }} - {{trail.name}}</label>
+			</div>
+		</div><br />
+		<div class="control" ng-repeat="trail in aTrails">
+			<div class="trail">
+				<label><input type="checkbox" ng-click="setSelectedTrail(trail)">{{ trail.parkID }} - {{trail.name}}</label>
+			</div>
+		</div><br />
+		<div class="control" ng-repeat="trail in exTrails">
+			<div class="trail">
+				<label><input type="checkbox" ng-click="setSelectedTrail(trail)">{{ trail.parkID }} - {{trail.name}}</label>
 			</div>
 		</div>
+
 	</div>
 
 	<div id="map-canvas"></div>

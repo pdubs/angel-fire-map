@@ -18,7 +18,7 @@ function returnColor(difficulty) {
 app.factory('myService', function($http) {
 	return {
 		getTrailData: function() {
-		    return $http.get('http://45.55.14.136:8000/trails').then(function(result) {
+		    return $http.get('http://45.55.14.136:8000/location/angel%20fire').then(function(result) {
 		    	return result.data;
 		    });
 		}
@@ -28,8 +28,12 @@ app.factory('myService', function($http) {
 app.controller('MainCtrl', function($scope, myService) {
 	myService.getTrailData().then(function(trailData) {
 		$scope.trailData = trailData;
-		$scope.trailParts = [];
 		var trails = [];
+
+		$scope.eTrails = [];
+		$scope.iTrails = [];
+		$scope.aTrails = [];
+		$scope.exTrails = [];
 
 		$scope.setSelectedTrail = function(trail) {
 			(trails[trail.num].getMap() == null) ? trails[trail.num].setMap(map) : trails[trail.num].setMap(null);
@@ -56,19 +60,50 @@ app.controller('MainCtrl', function($scope, myService) {
 					strokeWeight: 3,
 					name: trailData.features[key].properties.name,
 					difficulty: trailData.features[key].properties.difficulty,
-					num: key+1
+					num: key + 1,
+					parkID: trailData.features[key].properties.parkID
 				});
 			}
 
 			for (var i in trails) {
-				$scope.trailParts.push({
-					name:trails[i].style.name,
-					difficulty: trails[i].style.difficulty,
-					num:i
-				});
+				switch (trails[i].style.difficulty) {
+					case "e":
+						$scope.eTrails.push({
+							name: trails[i].style.name,
+							difficulty: trails[i].style.difficulty,
+							num: i,
+							parkID: trails[i].style.parkID
+						});
+						break;
+					case "i":
+						$scope.iTrails.push({
+							name: trails[i].style.name,
+							difficulty: trails[i].style.difficulty,
+							num: i,
+							parkID: trails[i].style.parkID
+						});
+						break;
+					case "a":
+						$scope.aTrails.push({
+							name: trails[i].style.name,
+							difficulty: trails[i].style.difficulty,
+							num: i,
+							parkID: trails[i].style.parkID
+						});
+						break;
+					case "ex": 
+						$scope.exTrails.push({
+							name: trails[i].style.name,
+							difficulty: trails[i].style.difficulty,
+							num: i,
+							parkID: trails[i].style.parkID
+						});
+						break;
+				}
 			}
 
 		} 
+
 
 		google.maps.event.addDomListener(window, "DOMContentLoaded", initialize());
 	});
