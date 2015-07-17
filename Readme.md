@@ -1,7 +1,11 @@
 # brApp #
 
-brApp is a trail map application for Make Benefit Glorious Nation of Bike Park Riders
+interactive bike park trail maps
 
-Starting with an interactive trail map of Angel Fire Bike Park, and then expanding into other Bike Park trail maps as well as social networking and trail logging features, users will one day be able to forego the use of the dreaded Strava in favor of a more gravity-focused application.
+starting with Angel Fire, NM - ultimately adding other Bike Park trail maps with a trail logging & commenting system.
 
-Utilizing the Google Maps API (https://developers.google.com/maps/documentation/javascript/) to display Geo Json trail data (http://geojson.org) generated from Strava's API (http://strava.github.io/api/).
+* References *
+[brApi - server & db](https://github.com/siromivel/brApi)
+[js google maps API](https://developers.google.com/maps/documentation/javascript/)
+[geo json trail data](http://geojson.org)
+[strava API](http://strava.github.io/api/)
