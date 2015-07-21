@@ -20,11 +20,11 @@ body {
 }
 
 #map-canvas {
-	border-radius: 500px;
-	transform: translateZ(0px) rotate(-120deg) !important;
+	/*border-radius: 500px;
+	transform: translateZ(0px) rotate(-120deg) !important;*/
 	width: 1000px;
-	height: 1000px;
-	top: -15px;
+	height: 600px;
+	top: 50px;
 }
 
 #mapControls {
@@ -33,23 +33,25 @@ body {
 	background-color: #ebedea;
 	padding: 0 10px;
 	z-index: 999;
-	opacity: 1;
+	opacity: 1.0;
+	left: 30px;
+	top: 200px;
 }
 
-#mapControls .control {
+#mapControls .mapControl {
 	margin: 3px 0;
 }
 
-#mapControls .control .trail {
+#mapControls .mapControl .trail {
 	font-size: 12px;
 }
 
-#mapControls .control label {
+#mapControls .mapControl label {
 	cursor: pointer;
 	font-size: 12px;
 }
 
-#mapControls .control input {
+#mapControls .mapControl input {
 	margin: 2px 2px 0 0px;
 	vertical-align: top;
 	cursor: pointer;
@@ -58,3 +60,55 @@ body {
 .gm-style .gm-style-iw img {
 	max-height: 300px;
 }
+
+#overlayControls {
+	top: 46px;
+	position: absolute;
+	left: 164px;
+	height: 15px;
+	opacity: 1.0;
+}
+
+#overlayControls .overlayControl {
+	font-size: 12px;
+	text-align: center;
+	width: 55px;
+	display: inline-block;
+	top: 0;
+	vertical-align: top;
+	cursor: pointer;
+	margin: 0 5px;
+	background-color: #ebedea;
+	border: 2px solid black;
+}
+
+#overlayControls .overlayControl:hover {
+	border: 2px solid gray;
+}
+
+#mapControls .mapControl .difficultyName {
+	text-transform: uppercase;
+}
+
+#mapControls .showAllDifficulty input {
+	margin: 5px 2px 0 0px;
+}
+
+
+
+.ea {
+	color: #66CD00;
+	text-shadow: 0px 0px 2px #fff;
+}
+.in {
+	color: #1ca4d5;
+	text-shadow: 0px 0px 2px #fff;
+}
+.ad {
+	color: #fbf136;
+	text-shadow: 0px 0px 2px #000;
+}		
+.ex {
+	color: #eb573a;
+	text-shadow: 0px 0px 2px #fff;
+}	
