@@ -20,28 +20,28 @@
 		<div class="difficultyName e">Easiest <label><input type="checkbox" ng-click="setSelectedDifficulty('e')">show all</label></div>
 		<div class="mapControl" ng-repeat="trail in eTrails">
 			<div class="trail">
-				<label><input type="checkbox" ng-click="setSelectedTrail(trail)">{{ trail.parkID }} - {{trail.name}}</label>
+				<label><input type="checkbox" ng-click="setSelectedTrail(trail)">{{ trail.parkID }} - {{trail.name}} ({{trail.segment}})</label>
 			</div>
 		</div>
 
 		<div class="difficultyName i">Intermediate <label><input type="checkbox" ng-click="setSelectedDifficulty('i')">show all</label></div>
 		<div class="mapControl" ng-repeat="trail in iTrails">
 			<div class="trail">
-				<label><input type="checkbox" ng-click="setSelectedTrail(trail)">{{ trail.parkID }} - {{trail.name}}</label>
+				<label><input type="checkbox" ng-click="setSelectedTrail(trail)">{{ trail.parkID }} - {{trail.name}} ({{trail.segment}})</label>
 			</div>
 		</div>
 
 		<div class="difficultyName a">Advanced <label><input type="checkbox" ng-click="setSelectedDifficulty('a')">show all</label></div>
 		<div class="mapControl" ng-repeat="trail in aTrails">
 			<div class="trail">
-				<label><input type="checkbox" ng-click="setSelectedTrail(trail)">{{ trail.parkID }} - {{trail.name}}</label>
+				<label><input type="checkbox" ng-click="setSelectedTrail(trail)">{{ trail.parkID }} - {{trail.name}} ({{trail.segment}})</label>
 			</div>
 		</div>
 
 		<div class="difficultyName x">Expert <label><input type="checkbox" ng-click="setSelectedDifficulty('ex')">show all</label></div>
 		<div class="mapControl" ng-repeat="trail in exTrails">
 			<div class="trail">
-				<label><input type="checkbox" ng-click="setSelectedTrail(trail)">{{ trail.parkID }} - {{trail.name}}</label>
+				<label><input type="checkbox" ng-click="setSelectedTrail(trail)">{{ trail.parkID }} - {{trail.name}} ({{trail.segment}})</label>
 			</div>
 		</div>
 

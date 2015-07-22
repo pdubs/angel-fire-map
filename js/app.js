@@ -85,7 +85,8 @@ app.controller('MainCtrl', function($scope, myService) {
 					name: trailData.features[key].properties.name,
 					difficulty: trailData.features[key].properties.difficulty,
 					num: key + 1,
-					parkID: trailData.features[key].properties.parkID
+					parkID: trailData.features[key].properties.parkID,
+					segment: trailData.features[key].properties.segment
 				});
 			}
 
@@ -96,7 +97,8 @@ app.controller('MainCtrl', function($scope, myService) {
 							name: trails[i].style.name,
 							difficulty: trails[i].style.difficulty,
 							num: i,
-							parkID: trails[i].style.parkID
+							parkID: trails[i].style.parkID,
+							segment: trails[i].style.segment
 						});
 						break;
 					case "i":
@@ -104,7 +106,8 @@ app.controller('MainCtrl', function($scope, myService) {
 							name: trails[i].style.name,
 							difficulty: trails[i].style.difficulty,
 							num: i,
-							parkID: trails[i].style.parkID
+							parkID: trails[i].style.parkID,
+							segment: trails[i].style.segment
 						});
 						break;
 					case "a":
@@ -112,7 +115,8 @@ app.controller('MainCtrl', function($scope, myService) {
 							name: trails[i].style.name,
 							difficulty: trails[i].style.difficulty,
 							num: i,
-							parkID: trails[i].style.parkID
+							parkID: trails[i].style.parkID,
+							segment: trails[i].style.segment
 						});
 						break;
 					case "ex": 
@@ -120,7 +124,8 @@ app.controller('MainCtrl', function($scope, myService) {
 							name: trails[i].style.name,
 							difficulty: trails[i].style.difficulty,
 							num: i,
-							parkID: trails[i].style.parkID
+							parkID: trails[i].style.parkID,
+							segment: trails[i].style.segment
 						});
 						break;
 				}
