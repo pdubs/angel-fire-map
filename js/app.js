@@ -35,7 +35,7 @@ app.controller('MainCtrl', function($scope, myService) {
 		$scope.aTrails = [];
 		$scope.exTrails = [];
 
-		$scope.mapTypes = [];
+		$scope.mapTypes = ["Satellite", "Topo"];
 
 		$scope.setSelectedTrail = function(trail) {
 			(trails[trail.num].getMap() == null) ? trails[trail.num].setMap(map) : trails[trail.num].setMap(null);
@@ -43,8 +43,8 @@ app.controller('MainCtrl', function($scope, myService) {
 
 		$scope.setSelectedDifficulty = function(difficulty) {
 			for (var i = 0; i < trails.length; i++) {
-				if (trails[i].difficulty === difficulty) {
-					(trails[i].getMap() == null) ? trails[trail.num].setMap(map) : trails[trail.num].setMap(null);
+				if (trails[i].style.difficulty === difficulty) {
+					(trails[i].getMap() == null) ? trails[i].setMap(map) : trails[i].setMap(null);
 				}
 			}
 		}
@@ -58,24 +58,22 @@ app.controller('MainCtrl', function($scope, myService) {
 				center: mapCenter,
 				zoom: 15,
 				disableDefaultUI: true,
-				disableDoubleClickZoom: true,
+				disableDoubleClickZoom: false,
 				draggable: true,
-				scrollwheel: false,
+				scrollwheel: true,
 				panControl: false,
 				zoomControl: true,
 				mapTypeId: google.maps.MapTypeId.SATELLITE	
 			};
 			
 			map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-			map.setTilt(45);
+
 			var markerA = new google.maps.Marker({position: new google.maps.LatLng(36.372149, -105.245045), map: map, icon: 'img/a.png'});
 			var markerB = new google.maps.Marker({position: new google.maps.LatLng(36.372304, -105.252478), map: map, icon: 'img/b.png'});
 			var markerC = new google.maps.Marker({position: new google.maps.LatLng(36.378944, -105.247422), map: map, icon: 'img/c.png'});
 			var markerD = new google.maps.Marker({position: new google.maps.LatLng(36.380713, -105.253571), map: map, icon: 'img/d.png'});
 			var markerE = new google.maps.Marker({position: new google.maps.LatLng(36.380236, -105.260261), map: map, icon: 'img/e.png'});
 			var markerF = new google.maps.Marker({position: new google.maps.LatLng(36.382454, -105.258893), map: map, icon: 'img/f.png'});
-			
-			$scope.mapTypes = ["Satellite", "Topo"];
 
 			for (var key = 0; key < trailData.features.length; key++){
 				trails[key] = new google.maps.Data();
