@@ -12,6 +12,8 @@ function returnColor(difficulty) {
 			return '#fbf136';
 		case "ex":
 			return '#eb573a';
+		case "p":
+			return '#d9212e';
 	}
 }
 
@@ -27,15 +29,13 @@ app.factory('myService', function($http) {
 
 app.controller('MainCtrl', function($scope, myService) {
 	myService.getTrailData().then(function(trailData) {
-		$scope.trailData = trailData;
 		var trails = [];
-
+		$scope.mapTypes = ["Satellite", "Topo"];
+		$scope.trailData = trailData;
 		$scope.eTrails = [];
 		$scope.iTrails = [];
 		$scope.aTrails = [];
 		$scope.exTrails = [];
-
-		$scope.mapTypes = ["Satellite", "Topo"];
 
 		$scope.setSelectedTrail = function(trail) {
 			(trails[trail.num].getMap() == null) ? trails[trail.num].setMap(map) : trails[trail.num].setMap(null);
@@ -130,46 +130,7 @@ app.controller('MainCtrl', function($scope, myService) {
 						break;
 				}
 			}
-
 		} 
-
-
 		google.maps.event.addDomListener(window, "DOMContentLoaded", initialize());
 	});
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
