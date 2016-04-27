@@ -1,0 +1,144 @@
+html, body, #map-canvas {
+	height: 100%;
+}
+
+body {
+	font-family: 'Lato', sans-serif;
+	background-image: url('http://www.angelfirechamber.org/user/cimage/afbp-logo-black.jpg');
+	background-color: white;
+	background-repeat: no-repeat;
+	background-size: 137px;
+	background-position: 180px 3px;
+    margin: 0;
+    top: -24px;
+    position: relative;
+}
+
+#map-canvas {
+	/*border-radius: 500px;
+	transform: translateZ(0px) rotate(-120deg) !important;*/
+	width: 950px;
+	height: 500px;
+	top: 50px;
+	margin-left: 174px;
+    margin-top: 23px;
+}
+
+#mapControls {
+	position: absolute;
+	margin: 5px 0px 0px 5px;
+	background-color: #ebedea;
+	padding: 5px 10px;
+	z-index: 999;
+	opacity: 1;
+	left: 0px;
+	border-radius: 2px;
+	-webkit-box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.43);
+	-moz-box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.43);
+	box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.43);
+}
+
+#mapControls .mapControl {
+	margin: 0;
+}
+
+#mapControls .mapControl .trail {
+	font-size: 12px;
+}
+
+#mapControls .mapControl label {
+	cursor: pointer;
+	font-size: 11px;
+}
+
+#mapControls .mapControl input {
+	margin: 1px 2px 0 0px;
+	vertical-align: top;
+	cursor: pointer;
+}
+
+.gm-style .gm-style-iw img {
+	max-height: 300px;
+}
+
+#mapControls .difficultyName {
+	text-transform: uppercase;
+    font-weight: bold;
+    font-size: 11px;
+    margin-top: 3px;
+    margin-bottom: 2px;
+    letter-spacing: 0.5px;
+}
+
+#mapControls .difficultyName.e {
+	border-bottom: 2px solid #66cd00;
+}
+
+#mapControls .difficultyName.i {
+	border-bottom: 2px solid #1ca4d5;
+}
+
+#mapControls .difficultyName.a {
+	border-bottom: 2px solid #fbf136;
+}
+
+#mapControls .difficultyName.x {
+	border-bottom: 2px solid #eb573a;
+}
+
+#mapControls .difficultyName label {
+	font-size: 10px;
+	font-weight: normal;
+	text-transform: none;
+	cursor: pointer;
+	float: right;
+	margin-left: 10px;
+}
+#mapControls .difficultyName input {
+	cursor: pointer;
+	margin: 0px 2px 2px 0px;
+	vertical-align: top;
+}
+
+#overlayControls {
+	top: 52px;
+	position: absolute;
+	left: 175px;
+	height: 15px;
+	opacity: 1.0;
+	z-index: 9;
+}
+
+#overlayControls .overlayControl {
+	font-size: 12px;
+	text-align: center;
+	width: 55px;
+	display: inline-block;
+	top: 0;
+	vertical-align: top;
+	cursor: pointer;
+	margin: 0 5px;
+	background-color: #ebedea;
+	border: 2px solid black;
+}
+
+#overlayControls .overlayControl:hover {
+	border: 2px solid gray;
+}
+
+.ea {
+	color: #66CD00;
+}
+.in {
+	color: #1ca4d5;
+}
+.ad {
+	color: #fbf136;
+}		
+.ex {
+	color: #eb573a;
+}
+
+.gmnoprint, .gm-style-cc {
+	display: none !important;
+}
