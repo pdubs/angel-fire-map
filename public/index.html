@@ -17,35 +17,20 @@
 	</div>
 	<div id="mapControls">
 
-		<div class="difficultyName e">Easiest <label><input type="checkbox" ng-click="setSelectedDifficulty('e')">show all</label></div>
-		<div class="mapControl" ng-repeat="trail in eTrails | orderBy:['+id','+segment']">
-			<div class="trail">
-				<label><input type="checkbox" ng-click="setSelectedTrail(trail)">{{ trail.id }} - {{trail.name}} ({{trail.segment}})</label>
-			</div>
+		<div class="mapControl trail" ng-repeat="trail in allTrails | orderBy:['+id']" ng-if="trail.name!='Chair Lift'">
+			<div class="trailName" ng-click="toggleTrail(trail)">{{ trail.id }} - {{trail.name}}</div>
+			<input class="segment" ng-repeat="segment in trail.segments" type="checkbox" ng-click="toggleSegment(segment)" ng-checked="segment.active">
 		</div>
 
-		<div class="difficultyName i">Intermediate <label><input type="checkbox" ng-click="setSelectedDifficulty('i')">show all</label></div>
-		<div class="mapControl" ng-repeat="trail in iTrails | orderBy:['+id','+segment']">
-			<div class="trail">
-				<label><input type="checkbox" ng-click="setSelectedTrail(trail)">{{ trail.id }} - {{trail.name}} ({{trail.segment}})</label>
-			</div>
+		<div class="diffControls">
+			<img class="diffControl" ng-src="{{ difficulty.img }}" ng-repeat="difficulty in difficulties | orderBy:['+id']" ng-click="toggleDifficulty(difficulty.shortName)">
 		</div>
 
-		<div class="difficultyName a">Advanced <label><input type="checkbox" ng-click="setSelectedDifficulty('a')">show all</label></div>
-		<div class="mapControl" ng-repeat="trail in aTrails | orderBy:['+id','+segment']">
-			<div class="trail">
-				<label><input type="checkbox" ng-click="setSelectedTrail(trail)">{{ trail.id }} - {{trail.name}} ({{trail.segment}})</label>
-			</div>
-		</div>
-
-		<div class="difficultyName x">Expert <label><input type="checkbox" ng-click="setSelectedDifficulty('ex')">show all</label></div>
-		<div class="mapControl" ng-repeat="trail in exTrails | orderBy:['+id','+segment']">
-			<div class="trail">
-				<label><input type="checkbox" ng-click="setSelectedTrail(trail)">{{ trail.id }} - {{trail.name}} ({{trail.segment}})</label>
-			</div>
-		</div>
-
+		<div class="showAllTrails" ng-click="showAllTrails()">Show All Trails</div>
+		<div class="hideAllTrails" ng-click="hideAllTrails()">Hide All Trails</div>
+		<div class="center"><img class="aflogo" src="img/af_logo.png"></div>
 	</div>
+	
 
 	<div id="map-canvas"></div>
 </body>

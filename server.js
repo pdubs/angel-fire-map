@@ -18,7 +18,7 @@ router.use(function(req, res, next) {
 
 // route for all trails
 router.get('/trails', function(req, res) {
-    Trail.find(function(err, trails) {
+    Trail.find().sort('properties.segment').find(function(err, trails) {
         if (err) { res.send(err); }
         console.log('* serving all trails');
         res.json(trails);
