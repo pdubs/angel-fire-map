@@ -4,23 +4,22 @@ html, body, #map-canvas {
 
 body {
 	font-family: 'Lato', sans-serif;
-	background-image: url('http://www.angelfirechamber.org/user/cimage/afbp-logo-black.jpg');
 	background-color: white;
-	background-repeat: no-repeat;
-	background-size: 137px;
-	background-position: 180px 3px;
     margin: 0;
-    top: -24px;
+    top: -26px;
     position: relative;
 }
-
+body .aflogo {
+    width: 137px;
+    margin: 0 auto;
+    position: relative;
+    display: block;
+}
 #map-canvas {
-	/*border-radius: 500px;
-	transform: translateZ(0px) rotate(-120deg) !important;*/
 	width: 950px;
 	height: 500px;
-	top: 50px;
-	margin-left: 174px;
+	top: 5px;
+	margin-left: 193px;
     margin-top: 23px;
 }
 
@@ -28,7 +27,7 @@ body {
 	position: absolute;
 	margin: 5px 0px 0px 5px;
 	background-color: #ebedea;
-	padding: 5px 10px;
+	padding: 5px;
 	z-index: 999;
 	opacity: 1;
 	left: 0px;
@@ -36,14 +35,20 @@ body {
 	-webkit-box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.43);
 	-moz-box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.43);
 	box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.43);
+	width:175px;
 }
 
 #mapControls .mapControl {
 	margin: 0;
+	height: 15px;
 }
 
-#mapControls .mapControl .trail {
-	font-size: 12px;
+#mapControls .mapControl .trailName {
+	font-size: 11px;
+	display:inline-block;
+	cursor:pointer;
+	vertical-align: top;
+	width: 116px;
 }
 
 #mapControls .mapControl label {
@@ -52,7 +57,7 @@ body {
 }
 
 #mapControls .mapControl input {
-	margin: 1px 2px 0 0px;
+	margin: 0px 0px 0 0px;
 	vertical-align: top;
 	cursor: pointer;
 }
@@ -101,9 +106,9 @@ body {
 }
 
 #overlayControls {
-	top: 52px;
+	top: 7px;
 	position: absolute;
-	left: 175px;
+	left: 197px;
 	height: 15px;
 	opacity: 1.0;
 	z-index: 9;
@@ -126,6 +131,12 @@ body {
 	border: 2px solid gray;
 }
 
+body .diffControls .diffControl {
+	cursor: pointer;
+    width: 25px;
+    margin: 2px 9px;
+}
+
 .ea {
 	color: #66CD00;
 }
@@ -139,6 +150,15 @@ body {
 	color: #eb573a;
 }
 
-.gmnoprint, .gm-style-cc {
-	display: none !important;
+.showAllTrails, .hideAllTrails {
+    cursor: pointer;
+    font-size: 12px;
+    text-align: center;
 }
+
+.center {
+	width: 100%;
+}
+
+
+
