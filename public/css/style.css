@@ -9,18 +9,12 @@ body {
     top: -26px;
     position: relative;
 }
+
 body .aflogo {
     width: 137px;
     margin: 0 auto;
     position: relative;
     display: block;
-}
-#map-canvas {
-	width: 950px;
-	height: 500px;
-	top: 5px;
-	margin-left: 193px;
-    margin-top: 23px;
 }
 
 #mapControls {
@@ -35,7 +29,7 @@ body .aflogo {
 	-webkit-box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.43);
 	-moz-box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.43);
 	box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.43);
-	width:175px;
+	width: 189px;
 }
 
 #mapControls .mapControl {
@@ -48,7 +42,13 @@ body .aflogo {
 	display:inline-block;
 	cursor:pointer;
 	vertical-align: top;
-	width: 116px;
+	width: 120px;
+}
+
+#mapControls .mapControl .parkId {
+	width: 14px;
+	display: inline-block;
+	    text-align: right;
 }
 
 #mapControls .mapControl label {
@@ -57,7 +57,7 @@ body .aflogo {
 }
 
 #mapControls .mapControl input {
-	margin: 0px 0px 0 0px;
+	margin: 0px 1px 0px 0px;
 	vertical-align: top;
 	cursor: pointer;
 }
@@ -106,12 +106,12 @@ body .aflogo {
 }
 
 #overlayControls {
-	top: 7px;
-	position: absolute;
-	left: 197px;
-	height: 15px;
-	opacity: 1.0;
-	z-index: 9;
+	top: 5px;
+    position: absolute;
+    left: 202px;
+    height: 15px;
+    opacity: 1.0;
+    z-index: 9;
 }
 
 #overlayControls .overlayControl {
@@ -124,11 +124,19 @@ body .aflogo {
 	cursor: pointer;
 	margin: 0 5px;
 	background-color: #ebedea;
-	border: 2px solid black;
+	z-index: 999;
+	opacity: 0.8;
+	left: 0px;
+	border: 2px solid transparent;
+	border-radius: 2px;
+	-webkit-box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.43);
+	-moz-box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.43);
+	box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.43);
 }
 
 #overlayControls .overlayControl:hover {
 	border: 2px solid gray;
+	opacity: 1;
 }
 
 body .diffControls .diffControl {
@@ -161,4 +169,29 @@ body .diffControls .diffControl {
 }
 
 
+
+/* mobile */
+@media (max-width: 767px) {
+
+}
+
+/* tablet */
+@media (min-width: 768px) {
+
+}
+
+/* desktop */
+@media (min-width: 992px) {
+    body {
+        top: 0;
+    }
+
+    body #map-canvas {
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        margin-left: 0;
+        margin-top: 0;
+    }
+}
 

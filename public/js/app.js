@@ -20,7 +20,7 @@ function returnColor(difficulty) {
 app.factory('myService', function($http) {
 	return {
 		getTrailData: function() {
-		    return $http.get('http://localhost:8080/api/trails/').then(function(result) {
+		    return $http.get('http://107.170.53.46:8080/api/trails/').then(function(result) {
 		    	return result.data;
 		    });
 		}
@@ -30,6 +30,7 @@ app.factory('myService', function($http) {
 app.controller('MainCtrl', function($scope, myService) {
 	myService.getTrailData().then(function(trailData) {
 		var trails = [];
+		var markers = [];
 		$scope.mapTypes = ["Satellite", "Topo"];
 		$scope.trailData = trailData;
 		$scope.allTrails = [];
@@ -155,17 +156,15 @@ app.controller('MainCtrl', function($scope, myService) {
 				zoomControl: true,
 				mapTypeId: google.maps.MapTypeId.SATELLITE	
 			};
-			
+
+
+
 			// init map - new google maps object targeting the .map-canvas element
 			map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 			// init hub markers
-			var markerA = new google.maps.Marker({position: new google.maps.LatLng(36.372149, -105.245045), map: map, icon: 'img/a.png'});
-			var markerB = new google.maps.Marker({position: new google.maps.LatLng(36.372304, -105.252478), map: map, icon: 'img/b.png'});
-			var markerC = new google.maps.Marker({position: new google.maps.LatLng(36.378944, -105.247422), map: map, icon: 'img/c.png'});
-			var markerD = new google.maps.Marker({position: new google.maps.LatLng(36.380713, -105.253571), map: map, icon: 'img/d.png'});
-			var markerE = new google.maps.Marker({position: new google.maps.LatLng(36.380236, -105.260261), map: map, icon: 'img/e.png'});
-			var markerF = new google.maps.Marker({position: new google.maps.LatLng(36.382454, -105.258893), map: map, icon: 'img/f.png'});
+			setMarkers(map);
+
 
 			// init trails[] - an array of google maps data objects
 			for (var key = 0; key < trailData.length; key++){
@@ -173,15 +172,15 @@ app.controller('MainCtrl', function($scope, myService) {
 				trails[key].addGeoJson(trailData[key]);
 				trails[key].setStyle({
 					strokeColor: returnColor(trailData[key].properties.difficulty),
-					strokeOpacity: 0.75,
-					strokeWeight: 2,
+					strokeOpacity: 0.9,
+					strokeWeight: 2.5,
 					name: trailData[key].properties.name,
 					difficulty: trailData[key].properties.difficulty,
 					num: key,
 					id: trailData[key].properties.id,
 					segment: trailData[key].properties.segment
 				});
-//14
+
 			}
 
 			// init $scope.allTrails[] - an array of trail data objects
@@ -222,7 +221,6 @@ app.controller('MainCtrl', function($scope, myService) {
 					trails[i].setMap(map);
 				}
 			}
-				console.log($scope.allTrails);
 
 			// init $scope.difficulties[] - an array of difficulty objects
 			$scope.difficulties = [{
@@ -258,7 +256,41 @@ app.controller('MainCtrl', function($scope, myService) {
 
 
 
-		} 
+
+
+		}
+
+		function setMarkers(map) {
+			var markerData = [
+				{lat: 36.372149, lng: -105.245045, icon: 'img/a.png'},
+				{lat: 36.372304, lng: -105.252478, icon: 'img/b.png'},
+				{lat: 36.378944, lng: -105.247422, icon: 'img/c.png'},
+				{lat: 36.380713, lng: -105.253571, icon: 'img/d.png'},
+				{lat: 36.380236, lng: -105.260261, icon: 'img/e.png'},
+				{lat: 36.382454, lng: -105.258893, icon: 'img/f.png'}
+			];
+
+			var marker, i;
+
+			for (i = 0; i < markerData.length; i++) {  
+				marker = new google.maps.Marker({
+					position: new google.maps.LatLng(markerData[i].lat, markerData[i].lng),
+					map: map,
+					icon: markerData[i].icon
+				});
+
+				google.maps.event.addListener(marker, 'click', (function(marker, i) {
+					return function() {
+						map.setZoom(18);
+						map.setCenter({lat: markerData[i].lat, lng: markerData[i].lng});
+					}
+				})(marker, i));
+			}
+
+
+		}
+
+
 		google.maps.event.addDomListener(window, "DOMContentLoaded", initialize());
 	});
 });

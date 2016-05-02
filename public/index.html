@@ -18,7 +18,9 @@
 	<div id="mapControls">
 
 		<div class="mapControl trail" ng-repeat="trail in allTrails | orderBy:['+id']" ng-if="trail.name!='Chair Lift'">
-			<div class="trailName" ng-click="toggleTrail(trail)">{{ trail.id }} - {{trail.name}}</div>
+			<div class="trailName" ng-click="toggleTrail(trail)">
+				<div class="parkId">{{ trail.id }}</div> - {{trail.name}}
+			</div>
 			<input class="segment" ng-repeat="segment in trail.segments" type="checkbox" ng-click="toggleSegment(segment)" ng-checked="segment.active">
 		</div>
 
