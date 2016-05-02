@@ -8,12 +8,14 @@
   └─ /server.js             # Node API Server
 ```
 
-Express: Node Framework for API Server (expressjs.com)
-Angular: Front-end (angularjs.org)
-&nbsp;&nbsp;&nbsp;&nbsp;Google Maps JS API (developers.google.com/maps)
-MongoDB: NoSQL document storage
-&nbsp;&nbsp;&nbsp;&nbsp;GeoJSON: Document storage format (geojson.org)
-&nbsp;&nbsp;&nbsp;&nbsp;Mongoose: MongoDB GeoJSON schema (mongoosejs.com)
+Express: Node Framework for API Server (http://expressjs.com)
+
+Angular: Front-end (http://angularjs.org)<br>
+&nbsp;&nbsp;Google Maps JS API (http://developers.google.com/maps)
+
+MongoDB: NoSQL document storage (https://mongodb.org)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;GeoJSON: Document storage format (http://geojson.org)<br>
+&nbsp;&nbsp;Mongoose: MongoDB GeoJSON schema (http://mongoosejs.com)
 
 
 
