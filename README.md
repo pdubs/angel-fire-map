@@ -15,7 +15,7 @@ Angular: Front-end (http://angularjs.org)<br>
 
 MongoDB: NoSQL document storage (https://mongodb.org)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;GeoJSON: Document storage format (http://geojson.org)<br>
-&nbsp;&nbsp;Mongoose: MongoDB GeoJSON schema (http://mongoosejs.com)
+&nbsp;&nbsp;&nbsp;&nbsp;Mongoose: MongoDB GeoJSON schema (http://mongoosejs.com)
 
 
 
