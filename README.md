@@ -11,7 +11,7 @@
 Express: Node Framework for API Server (http://expressjs.com)
 
 Angular: Front-end (http://angularjs.org)<br>
-&nbsp;&nbsp;Google Maps JS API (http://developers.google.com/maps)
+&nbsp;&nbsp;&nbsp;&nbsp;Google Maps JS API (http://developers.google.com/maps)
 
 MongoDB: NoSQL document storage (https://mongodb.org)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;GeoJSON: Document storage format (http://geojson.org)<br>
