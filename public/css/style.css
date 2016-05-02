@@ -142,27 +142,55 @@ body .aflogo {
 body .diffControls .diffControl {
 	cursor: pointer;
     width: 25px;
-    margin: 2px 9px;
+    margin: 2px 11px;
 }
 
 .ea {
-	color: #66CD00;
+	color: black;
+	border-bottom: 1px solid #66CD00;
 }
 .in {
-	color: #1ca4d5;
+	color: black;
+	border-bottom: 1px solid #1ca4d5;
 }
 .ad {
-	color: #fbf136;
+	color: black;
+	border-bottom: 1px solid #fbf136;
 }		
 .ex {
-	color: #eb573a;
+	color: black;
+	border-bottom: 1px solid #eb573a;
+}
+
+body .diffName {
+    font-size: 11px;
+    text-transform: uppercase;
+    margin: 1px 0 1px 0px;
+    font-weight:bold;
+
 }
 
 .showAllTrails, .hideAllTrails {
     cursor: pointer;
     font-size: 12px;
     text-align: center;
+    width: 47%;
+    display: inline-block;
+    position: relative;
+    margin: 0;
+    padding: 7px 0;
+    border-radius: 5px;
+    border: 2px solid grey;
+    background-color: grey;
+    color: white;
+    text-shadow: 1px 0px 1px black;
+    text-transform: uppercase;
 }
+
+.showAllTrails:hover, .hideAllTrails:hover {
+    background-color: black;
+}
+
 
 .center {
 	width: 100%;
