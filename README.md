@@ -1,16 +1,20 @@
 ## Angel Fire Bike Park Interactive Trail Map
 
-
-
 ```
-AF_TrailMap
-  ├─ /app/models/trail.js   # Trail Model (mongoose schema for mlab MongoDB)
+/angel-fire-map
+  ├─ /app/models/trail.js   # Trail Model
   ├─ /public/index.html     # Front End Google Map Display
   ├─ /public/js/app.js      # AngularJS Google Maps API Application
   └─ /server.js             # Node API Server
 ```
 
+Express: Node Framework for API Server (expressjs.com)
+Angular: Front-end (angularjs.org)
+&nbsp;&nbsp;&nbsp;&nbsp;Google Maps JS API (developers.google.com/maps)
+MongoDB: NoSQL document storage
+&nbsp;&nbsp;&nbsp;&nbsp;GeoJSON: Document storage format (geojson.org)
+&nbsp;&nbsp;&nbsp;&nbsp;Mongoose: MongoDB GeoJSON schema (mongoosejs.com)
 
-Official Site: http://www.angelfireresort.com/activities/summer-activities/bike-park/
 
-![official trail map](http://1mnser1tzk003sdrpi2w58gx.wpengine.netdna-cdn.com/wp-content/uploads/2014/07/Angel-Fire-Bike-Park_Trail-Map-Only.jpg "Official Trail Map")
+
+
