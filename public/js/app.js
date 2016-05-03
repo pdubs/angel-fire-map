@@ -18,6 +18,19 @@ function returnColor(difficulty) {
 	}
 }
 
+function getDifficultyName(difficulty) {
+	switch (difficulty) {
+		case "e":
+			return 'Easiest';
+		case "i":
+			return 'Intermediate';
+		case "a":
+			return 'Advanced';
+		case "ex":
+			return 'Expert Only';
+	}
+}
+
 // angular service to return array of geoJSON trail objects
 app.factory('myService', function($http) {
 	return {
@@ -36,6 +49,7 @@ app.controller('MainCtrl', function($scope, myService) {
 	myService.getTrailData().then(function(trailData) {
 		var trails = [];
 		var markers = [];
+		var infowindows = [];
 		$scope.mapTypes = ["Satellite", "Topo"];
 		$scope.trailData = trailData;
 		$scope.allTrails = [];
@@ -60,7 +74,7 @@ app.controller('MainCtrl', function($scope, myService) {
 			
 			var GeoMarker = new GeolocationMarker(map);
 
-			// init trails[] - google.maps.Data[] for trail overlays on map
+			// init trails[] - google.maps.Data[] for trail overlays on map + hover/click functions
 			setTrails(trailData, map);
 
 			// init $scope.allTrails[] - an array of trail data objects for map controls
@@ -75,20 +89,89 @@ app.controller('MainCtrl', function($scope, myService) {
 		}
 
 		function setTrails(trailData, map) {
-			for (var key = 0; key < trailData.length; key++){
+			var trail, key;
+			for (key = 0; key < trailData.length; key++){
 				trails[key] = new google.maps.Data();
 				trails[key].addGeoJson(trailData[key]);
 				trails[key].setStyle({
 					strokeColor: returnColor(trailData[key].properties.difficulty),
-					strokeOpacity: 0.9,
-					strokeWeight: 2.5,
+					strokeOpacity: 0.75,
+					strokeWeight: 4,
 					name: trailData[key].properties.name,
 					difficulty: trailData[key].properties.difficulty,
 					num: key,
 					id: trailData[key].properties.id,
-					segment: trailData[key].properties.segment
+					segment: trailData[key].properties.segment,
+					center: trailData[key].properties.center,
+					zoom: trailData[key].properties.zoom,
+					description: trailData[key].properties.description
 				});
 
+				trail = trails[key];
+
+				if (trail.style.name != "Chair Lift") {
+					// event listener to increase weight of trail on mouseover
+					google.maps.event.addListener(trail, 'mouseover', (function(trail, key) {
+						return function() {
+							trail.setStyle({
+								strokeColor: returnColor(trail.style.difficulty),
+								strokeOpacity: 1,
+								strokeWeight: 5,
+								name: trail.style.name,
+								difficulty: trail.style.difficulty,
+								num: key,
+								id: trail.style.id,
+								segment: trail.style.segment,
+								center: trail.style.center,
+								zoom: trail.style.zoom,
+								description: trail.style.description
+							});
+						}
+					})(trail, key));
+
+					// event listener to decrease weight of trail on mouseout
+					google.maps.event.addListener(trail, 'mouseout', (function(trail, key) {
+						return function() {
+							trail.setStyle({
+								strokeColor: returnColor(trail.style.difficulty),
+								strokeOpacity: 0.75,
+								strokeWeight: 4,
+								name: trail.style.name,
+								difficulty: trail.style.difficulty,
+								num: key,
+								id: trail.style.id,
+								segment: trail.style.segment,
+								center: trail.style.center,
+								zoom: trail.style.zoom,
+								description: trail.style.description
+							});
+						}
+					})(trail, key));
+
+					// create infoWindows
+					var contentString =
+						'<div id="iw-content">' +
+							'<div class="iw-trailName">' + trail.style.name + '</div>' +
+							'<div class="iw-difficulty ' + trail.style.difficulty + '">' + getDifficultyName(trail.style.difficulty) + '</div>' +
+							'<div class="iw-description">' + trail.style.description + '</div>' +
+						'</div>';
+
+					infowindows[key] = new google.maps.InfoWindow({
+						content: contentString
+					});
+
+					// event listener to zoom to center of segment and show infoWindow on click
+					google.maps.event.addListener(trail, 'click', (function(trail, key, map) {
+						return function() {
+							console.log(trail.style.name + " has been clicked");
+							marker = new google.maps.Marker({map:map, position:{lat: trail.style.center[0], lng: trail.style.center[1]}, title:trail.style.name});
+							map.setZoom(trail.style.zoom);
+							map.setCenter({lat: trail.style.center[0], lng: trail.style.center[1]});
+
+							infowindows[key].open(map, marker);
+						}
+					})(trail, key, map));
+				}
 			}
 		}
 
@@ -183,7 +266,7 @@ app.controller('MainCtrl', function($scope, myService) {
 					map: map,
 					icon: markerData[i].icon
 				});
-				// create click functions
+				// event listener to zoom to center of marker on click
 				google.maps.event.addListener(marker, 'click', (function(marker, i) {
 					return function() {
 						map.setZoom(18);

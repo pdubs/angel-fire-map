@@ -1,27 +1,31 @@
 html, body, #map-canvas {
 	height: 100%;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
 }
 
 body {
 	font-family: 'Lato', sans-serif;
 	background-color: white;
-    margin: 0;
-    top: -26px;
-    position: relative;
+	margin: 0;
+	top: -26px;
+	position: relative;
 }
 
-body .aflogo {
-    width: 137px;
-    margin: 0 auto;
-    position: relative;
-    display: block;
+body #aflogo {
+	width: 137px;
+	margin: 0 auto;
+	position: relative;
+	display: block;
 }
 
-#mapControls {
+body #mapControls {
 	position: absolute;
 	margin: 5px 0px 0px 5px;
 	background-color: #ebedea;
-	padding: 5px;
+	padding: 1px 4px 4px 4px;
 	z-index: 999;
 	opacity: 1;
 	left: 0px;
@@ -29,92 +33,110 @@ body .aflogo {
 	-webkit-box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.43);
 	-moz-box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.43);
 	box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.43);
-	width: 189px;
+	width: 176px;
 }
 
-#mapControls .mapControl {
-	margin: 0;
-	height: 15px;
+body #mapControls .mapControl {
+	margin: 0 0 1px 0;
+    height: 12px;
 }
 
-#mapControls .mapControl .trailName {
+body #mapControls .mapControl .trailName {
 	font-size: 11px;
-	display:inline-block;
-	cursor:pointer;
+	display: inline-block;
+	cursor: pointer;
 	vertical-align: top;
-	width: 120px;
+	width: 107px;
 }
 
-#mapControls .mapControl .parkId {
+body #mapControls .mapControl .parkId {
 	width: 14px;
 	display: inline-block;
-	    text-align: right;
+	text-align: right;
 }
 
-#mapControls .mapControl label {
-	cursor: pointer;
-	font-size: 11px;
-}
-
-#mapControls .mapControl input {
+body #mapControls .mapControl input {
 	margin: 0px 1px 0px 0px;
 	vertical-align: top;
 	cursor: pointer;
 }
 
-.gm-style .gm-style-iw img {
-	max-height: 300px;
+body #mapControls .diffHeader {
+	height: 15px;
+	margin-bottom: 2px;
+	margin-top: 2px;
 }
 
-#mapControls .difficultyName {
-	text-transform: uppercase;
-    font-weight: bold;
-    font-size: 11px;
-    margin-top: 3px;
-    margin-bottom: 2px;
-    letter-spacing: 0.5px;
-}
-
-#mapControls .difficultyName.e {
-	border-bottom: 2px solid #66cd00;
-}
-
-#mapControls .difficultyName.i {
-	border-bottom: 2px solid #1ca4d5;
-}
-
-#mapControls .difficultyName.a {
-	border-bottom: 2px solid #fbf136;
-}
-
-#mapControls .difficultyName.x {
-	border-bottom: 2px solid #eb573a;
-}
-
-#mapControls .difficultyName label {
-	font-size: 10px;
-	font-weight: normal;
-	text-transform: none;
+body #mapControls .diffHeader .diffControl {
 	cursor: pointer;
-	float: right;
-	margin-left: 10px;
-}
-#mapControls .difficultyName input {
-	cursor: pointer;
-	margin: 0px 2px 2px 0px;
+	display: inline-block;
 	vertical-align: top;
 }
 
-#overlayControls {
-	top: 5px;
-    position: absolute;
-    left: 202px;
-    height: 15px;
-    opacity: 1.0;
-    z-index: 9;
+body #mapControls .diffHeader .diffName {
+	font-size: 11px;
+	text-transform: uppercase;
+	margin: 0;
+	display: inline-block;
+	font-weight: bold;
+	vertical-align: top;
+	top: 1px;
+	position: relative;
+	cursor: pointer;
 }
 
-#overlayControls .overlayControl {
+.ea {
+	border-top: 1px solid #66CD00;
+	border-bottom: 1px solid #66CD00;
+}
+.in {
+	border-top: 1px solid #1ca4d5;
+	border-bottom: 1px solid #1ca4d5;
+}
+.ad {
+	border-top: 1px solid #fbf136;
+	border-bottom: 1px solid #fbf136;
+}		
+.ex {
+	border-top: 1px solid #eb573a;
+	border-bottom: 1px solid #eb573a;
+}
+
+body .allControls {
+	margin-top:5px;
+}
+
+.showAllTrails, .hideAllTrails {
+	cursor: pointer;
+	font-size: 12px;
+	text-align: center;
+	width: 46.8%;
+	display: inline-block;
+	position: relative;
+	margin: 0;
+	padding: 7px 0;
+	border-radius: 5px;
+	border: 2px solid grey;
+	background-color: grey;
+	color: white;
+	text-shadow: 1px 0px 1px black;
+	text-transform: uppercase;
+}
+
+.showAllTrails:hover, .hideAllTrails:hover {
+	background-color: black;
+}
+
+body #overlayControls {
+	top: 5px;
+	position: absolute;
+	left: 202px;
+	height: 15px;
+	opacity: 1.0;
+	z-index: 9;
+}
+
+body #overlayControls .mapType {
 	font-size: 12px;
 	text-align: center;
 	width: 55px;
@@ -134,68 +156,10 @@ body .aflogo {
 	box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.43);
 }
 
-#overlayControls .overlayControl:hover {
+body #overlayControls .mapType:hover {
 	border: 2px solid gray;
 	opacity: 1;
 }
-
-body .diffControls .diffControl {
-	cursor: pointer;
-    width: 25px;
-    margin: 2px 11px;
-}
-
-.ea {
-	color: black;
-	border-bottom: 1px solid #66CD00;
-}
-.in {
-	color: black;
-	border-bottom: 1px solid #1ca4d5;
-}
-.ad {
-	color: black;
-	border-bottom: 1px solid #fbf136;
-}		
-.ex {
-	color: black;
-	border-bottom: 1px solid #eb573a;
-}
-
-body .diffName {
-    font-size: 11px;
-    text-transform: uppercase;
-    margin: 1px 0 1px 0px;
-    font-weight:bold;
-
-}
-
-.showAllTrails, .hideAllTrails {
-    cursor: pointer;
-    font-size: 12px;
-    text-align: center;
-    width: 47%;
-    display: inline-block;
-    position: relative;
-    margin: 0;
-    padding: 7px 0;
-    border-radius: 5px;
-    border: 2px solid grey;
-    background-color: grey;
-    color: white;
-    text-shadow: 1px 0px 1px black;
-    text-transform: uppercase;
-}
-
-.showAllTrails:hover, .hideAllTrails:hover {
-    background-color: black;
-}
-
-
-.center {
-	width: 100%;
-}
-
 
 
 /* mobile */
@@ -210,16 +174,16 @@ body .diffName {
 
 /* desktop */
 @media (min-width: 992px) {
-    body {
-        top: 0;
-    }
+	body {
+		top: 0;
+	}
 
-    body #map-canvas {
-        width: 100%;
-        height: 100%;
-        top: 0px;
-        margin-left: 0;
-        margin-top: 0;
-    }
+	body #map-canvas {
+		width: 100%;
+		height: 100%;
+		top: 0px;
+		margin-left: 0;
+		margin-top: 0;
+	}
 }
 
