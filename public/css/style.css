@@ -14,13 +14,7 @@ body {
 	position: relative;
 }
 
-body #aflogo {
-	width: 137px;
-	margin: 0 auto;
-	position: relative;
-	display: block;
-}
-
+/* mapControls */
 body #mapControls {
 	position: absolute;
 	margin: 5px 0px 0px 5px;
@@ -85,28 +79,30 @@ body #mapControls .diffHeader .diffName {
 	cursor: pointer;
 }
 
-.ea {
+body #mapControls .ea {
 	border-top: 1px solid #66CD00;
 	border-bottom: 1px solid #66CD00;
 }
-.in {
+body #mapControls .in {
 	border-top: 1px solid #1ca4d5;
 	border-bottom: 1px solid #1ca4d5;
 }
-.ad {
+body #mapControls .ad {
 	border-top: 1px solid #fbf136;
 	border-bottom: 1px solid #fbf136;
-}		
-.ex {
+}
+
+body #mapControls .ex {
 	border-top: 1px solid #eb573a;
 	border-bottom: 1px solid #eb573a;
 }
 
-body .allControls {
+body #mapControls .allControls {
 	margin-top:5px;
 }
 
-.showAllTrails, .hideAllTrails {
+body #mapControls .allControls .showAllTrails,
+body #mapControls .allControls .hideAllTrails {
 	cursor: pointer;
 	font-size: 12px;
 	text-align: center;
@@ -123,10 +119,19 @@ body .allControls {
 	text-transform: uppercase;
 }
 
-.showAllTrails:hover, .hideAllTrails:hover {
+body #mapControls .allControls .showAllTrails:hover,
+body #mapControls .allControls .hideAllTrails:hover {
 	background-color: black;
 }
 
+body #mapControls #aflogo {
+	width: 137px;
+	margin: 0 auto;
+	position: relative;
+	display: block;
+}
+
+/* overlayControls */
 body #overlayControls {
 	top: 5px;
 	position: absolute;
@@ -160,6 +165,36 @@ body #overlayControls .mapType:hover {
 	border: 2px solid gray;
 	opacity: 1;
 }
+
+/* infoWindows */
+body .gm-style-iw {
+	
+}
+
+body .gm-style-iw .iw-content {
+	
+}
+
+body .gm-style-iw .iw-content .iw-header {
+	
+}
+
+body .gm-style-iw .iw-content .iw-segment {
+	
+}
+
+body .gm-style-iw .iw-content .iw-difficulty {
+	
+}
+
+body .gm-style-iw .iw-content .iw-description {
+	
+}
+
+
+
+
+
 
 
 /* mobile */

@@ -2,8 +2,18 @@
 
 ```
 /angel-fire-map
-  ├─ /server.js             # Node/Express API Server
-  ├─ /app/models/trail.js   # GeoJSON Mongoose TrailSchema
-  ├─ /public/js/app.js      # Angular Controller & Service
-  └─ /public/index.html     # HTML Index for Trail Map
+  ├─ /server.js             # API Server
+  ├─ /app/models/trail.js   # Database Schema
+  ├─ /public/js/app.js      # Front-end Controller
+  └─ /public/index.html     # HTML Index
 ```
+
+MongoDB hosted by mlab to store GeoJSON trails
+Express API server to provide trail data
+Angular application utilizing Google Maps JS API
+
+npm Packages:
+- express
+- mongoose
+- geolocation-marker
+- lodash

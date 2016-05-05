@@ -78,7 +78,6 @@ app.controller('MainCtrl', function($scope, myService) {
 			setTrails(trailData, map);
 
 			// init $scope.allTrails[] - an array of trail data objects for map controls
-			// nests each segment into segment[] property
 			setTrailControls(trails, trailData, map);
 
 			// init $scope.difficulties[] - array of difficulty objects for map controls
@@ -86,11 +85,19 @@ app.controller('MainCtrl', function($scope, myService) {
 
 			// init hub markers + click functions
 			setMarkers(map);
+
+			// show all trails by default
+			$scope.showAllTrails();
+
 		}
 
 		function setTrails(trailData, map) {
-			var trail, key;
+			var trail, key, center;
 			for (key = 0; key < trailData.length; key++){
+				// define center position + remove elevation
+				center = trailData[key].geometry.coordinates[Math.round(trailData[key].geometry.coordinates.length / 2)];
+				(center.length != 2) ? center.pop() : center;
+
 				trails[key] = new google.maps.Data();
 				trails[key].addGeoJson(trailData[key]);
 				trails[key].setStyle({
@@ -102,8 +109,8 @@ app.controller('MainCtrl', function($scope, myService) {
 					num: key,
 					id: trailData[key].properties.id,
 					segment: trailData[key].properties.segment,
-					center: trailData[key].properties.center,
-					zoom: trailData[key].properties.zoom,
+					center: center,
+					zoom: 15,
 					description: trailData[key].properties.description
 				});
 
@@ -123,7 +130,6 @@ app.controller('MainCtrl', function($scope, myService) {
 								id: trail.style.id,
 								segment: trail.style.segment,
 								center: trail.style.center,
-								zoom: trail.style.zoom,
 								description: trail.style.description
 							});
 						}
@@ -142,7 +148,6 @@ app.controller('MainCtrl', function($scope, myService) {
 								id: trail.style.id,
 								segment: trail.style.segment,
 								center: trail.style.center,
-								zoom: trail.style.zoom,
 								description: trail.style.description
 							});
 						}
@@ -150,9 +155,9 @@ app.controller('MainCtrl', function($scope, myService) {
 
 					// create infoWindows
 					var contentString =
-						'<div id="iw-content">' +
-							'<div class="iw-trailName">' + trail.style.name + '</div>' +
-							'<div class="iw-difficulty ' + trail.style.difficulty + '">' + getDifficultyName(trail.style.difficulty) + '</div>' +
+						'<div class="iw-content">' +
+							'<div class="iw-header">' + trail.style.id + ' - ' + trail.style.name + ' (#' + trail.style.segment + ')' + '</div>' +
+							'<div class="iw-difficulty">' + getDifficultyName(trail.style.difficulty) + '</div>' +
 							'<div class="iw-description">' + trail.style.description + '</div>' +
 						'</div>';
 
@@ -160,14 +165,13 @@ app.controller('MainCtrl', function($scope, myService) {
 						content: contentString
 					});
 
-					// event listener to zoom to center of segment and show infoWindow on click
+					// event listener to move to center of segment and show infoWindow on click
 					google.maps.event.addListener(trail, 'click', (function(trail, key, map) {
 						return function() {
 							console.log(trail.style.name + " has been clicked");
-							marker = new google.maps.Marker({map:map, position:{lat: trail.style.center[0], lng: trail.style.center[1]}, title:trail.style.name});
-							map.setZoom(trail.style.zoom);
-							map.setCenter({lat: trail.style.center[0], lng: trail.style.center[1]});
-
+							marker = new google.maps.Marker({icon:{}, map:map, position:{lat: trail.style.center[1], lng: trail.style.center[0]}, title:trail.style.name});
+							marker.setVisible(false);
+							map.setCenter({lat: trail.style.center[1], lng: trail.style.center[0]});
 							infowindows[key].open(map, marker);
 						}
 					})(trail, key, map));

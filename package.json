@@ -1,9 +1,15 @@
 {
-    "name": "node-api",
-    "main": "server.js",
-    "dependencies": {
-        "express": "~4.0.0",
-        "mongoose": "~4.4.3",
-        "body-parser": "~1.0.1"
-    }
+	"name": "node-api",
+	"main": "server.js",
+	"version": "0.1.0",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/pdubs/angel-fire-map.git"
+	},
+	"dependencies": {
+		"express": "~4.0.0",
+		"mongoose": "~4.4.3",
+		"geolocation-marker": "~2.0.4",
+		"lodash": "^4.11.2"
+	}
 }
