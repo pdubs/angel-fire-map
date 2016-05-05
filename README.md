@@ -9,7 +9,9 @@
 ```
 
 MongoDB hosted by mlab to store GeoJSON trails
+
 Express API server to provide trail data
+
 Angular application utilizing Google Maps JS API
 
 npm Packages:
