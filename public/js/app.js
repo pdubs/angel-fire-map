@@ -2,7 +2,6 @@ var map;
 var mapCenter = new google.maps.LatLng(36.379, -105.254);
 var app = angular.module('afMap', []);
 
-// returnColor(difficulty) receives the shortName of a difficulty and returns the corresponding hex value
 function returnColor(difficulty) {
 	switch (difficulty) {
 		case "e":
@@ -50,6 +49,14 @@ app.controller('MainCtrl', function($scope, myService) {
 		var trails = [];
 		var markers = [];
 		var infowindows = [];
+		var markerData = [
+			{lat: 36.372149, lng: -105.245045, icon: 'img/a.png'},
+			{lat: 36.372304, lng: -105.252478, icon: 'img/b.png'},
+			{lat: 36.378944, lng: -105.247422, icon: 'img/c.png'},
+			{lat: 36.380713, lng: -105.253571, icon: 'img/d.png'},
+			{lat: 36.380236, lng: -105.260261, icon: 'img/e.png'},
+			{lat: 36.382454, lng: -105.258893, icon: 'img/f.png'}
+		];
 		$scope.mapTypes = ["Satellite", "Topo"];
 		$scope.trailData = trailData;
 		$scope.allTrails = [];
@@ -87,31 +94,30 @@ app.controller('MainCtrl', function($scope, myService) {
 			setMarkers(map);
 
 			// show all trails by default
-			$scope.showAllTrails();
+			$scope.toggleAllTrails('true');
 
 		}
 
-		function setTrails(trailData, map) {
-			var trail, key, center;
-			for (key = 0; key < trailData.length; key++){
+		function setTrails() {
+			_.forEach(trailData, function(trail, key) {
 				// define center position + remove elevation
-				center = trailData[key].geometry.coordinates[Math.round(trailData[key].geometry.coordinates.length / 2)];
+				center = trail.geometry.coordinates[Math.round(trail.geometry.coordinates.length / 2)];
 				(center.length != 2) ? center.pop() : center;
 
 				trails[key] = new google.maps.Data();
-				trails[key].addGeoJson(trailData[key]);
+				trails[key].addGeoJson(trail);
 				trails[key].setStyle({
-					strokeColor: returnColor(trailData[key].properties.difficulty),
+					strokeColor: returnColor(trail.properties.difficulty),
 					strokeOpacity: 0.75,
 					strokeWeight: 4,
-					name: trailData[key].properties.name,
-					difficulty: trailData[key].properties.difficulty,
+					name: trail.properties.name,
+					difficulty: trail.properties.difficulty,
 					num: key,
-					id: trailData[key].properties.id,
-					segment: trailData[key].properties.segment,
+					id: trail.properties.id,
+					segment: trail.properties.segment,
 					center: center,
 					zoom: 15,
-					description: trailData[key].properties.description
+					description: trail.properties.description
 				});
 
 				trail = trails[key];
@@ -153,7 +159,7 @@ app.controller('MainCtrl', function($scope, myService) {
 						}
 					})(trail, key));
 
-					// create infoWindows
+					// create infoWindow content
 					var contentString =
 						'<div class="iw-content">' +
 							'<div class="iw-header">' + trail.style.id + ' - ' + trail.style.name + ' (#' + trail.style.segment + ')' + '</div>' +
@@ -161,6 +167,7 @@ app.controller('MainCtrl', function($scope, myService) {
 							'<div class="iw-description">' + trail.style.description + '</div>' +
 						'</div>';
 
+					// create infoWindow
 					infowindows[key] = new google.maps.InfoWindow({
 						content: contentString
 					});
@@ -176,48 +183,48 @@ app.controller('MainCtrl', function($scope, myService) {
 						}
 					})(trail, key, map));
 				}
-			}
+			});
 		}
 
-		function setTrailControls(trails, trailData, map) {
-			for (var i in trails) {
+		function setTrailControls() {
+			_.forEach(trails, function(trail, i) {
 				// if the current trail is a unique trail, add it to $scope.allTrails[]
-				if (trails[i].style.segment == "1" ) {
+				if (trail.style.segment == "1" ) {
 					$scope.allTrails.push({
-						name: trails[i].style.name,
-						difficulty: trails[i].style.difficulty,
-						id: trails[i].style.id,
+						name: trail.style.name,
+						difficulty: trail.style.difficulty,
+						id: trail.style.id,
 						active: false,
 						segments: [{
-							name: trails[i].style.name,
-							difficulty: trails[i].style.difficulty,
-							id: trails[i].style.id,
-							num: trails[i].style.num,
-							segment: trails[i].style.segment,
+							name: trail.style.name,
+							difficulty: trail.style.difficulty,
+							id: trail.style.id,
+							num: trail.style.num,
+							segment: trail.style.segment,
 							active: false
 						}]
 					});
 				}
 				// if the current trail is a segment of a previous trail, add it to $scope.allTrails[].segments[]
 				else {
-					for (var j in $scope.allTrails) {
-						if (trails[i].style.id == $scope.allTrails[j].id) {
+					_.forEach($scope.allTrails, function(allTrail, j) {
+						if (trail.style.id == allTrail.id) {
 							$scope.allTrails[j].segments.push({
-								name: trails[i].style.name,
-								difficulty: trails[i].style.difficulty,
-								id: trails[i].style.id,
-								num: trails[i].style.num,
-								segment: trails[i].style.segment,
+								name: trail.style.name,
+								difficulty: trail.style.difficulty,
+								id: trail.style.id,
+								num: trail.style.num,
+								segment: trail.style.segment,
 								active: false
 							});
 						}
-					}
+					});
 				}
 				// display the chairlift path
-				if (trails[i].style.name == "Chair Lift") {
-					trails[i].setMap(map);
+				if (trail.style.name == "Chair Lift") {
+					trail.setMap(map);
 				}
-			}
+			});
 		}
 
 		function setDifficulties() {
@@ -252,23 +259,19 @@ app.controller('MainCtrl', function($scope, myService) {
 			}];
 		}
 
-		function setMarkers(map) {
-			var marker, i;
-			var markerData = [
-				{lat: 36.372149, lng: -105.245045, icon: 'img/a.png'},
-				{lat: 36.372304, lng: -105.252478, icon: 'img/b.png'},
-				{lat: 36.378944, lng: -105.247422, icon: 'img/c.png'},
-				{lat: 36.380713, lng: -105.253571, icon: 'img/d.png'},
-				{lat: 36.380236, lng: -105.260261, icon: 'img/e.png'},
-				{lat: 36.382454, lng: -105.258893, icon: 'img/f.png'}
-			];
-
-			for (i = 0; i < markerData.length; i++) {
+		function setMarkers() {
+			_.forEach(markerData, function(marker, i) {
+				var image = {
+					url: markerData[i].icon,
+					size: new google.maps.Size(17, 17),
+					origin: new google.maps.Point(0, 0),
+					anchor: new google.maps.Point(0, 0)
+				};
 				// create markers
 				marker = new google.maps.Marker({
 					position: new google.maps.LatLng(markerData[i].lat, markerData[i].lng),
 					map: map,
-					icon: markerData[i].icon
+					icon: image
 				});
 				// event listener to zoom to center of marker on click
 				google.maps.event.addListener(marker, 'click', (function(marker, i) {
@@ -277,110 +280,86 @@ app.controller('MainCtrl', function($scope, myService) {
 						map.setCenter({lat: markerData[i].lat, lng: markerData[i].lng});
 					}
 				})(marker, i));
-			}
+			});
 		}
 
 		// $scope.toggleSegment() - show/hide certain segment
-		$scope.toggleSegment = function(trail) {
-			console.log(((trail.active) ? "HIDING TRAIL SEGMENT " : "SHOWING TRAIL SEGMENT ") + trail.name + " #" + trails[trail.num].style.segment);
-			for (var i=0;i<$scope.allTrails.length;i++) {
-				for (var j=0;j<$scope.allTrails[i].segments.length;j++) {
-					if ($scope.allTrails[i].segments[j].num == trail.num) {
-						if ($scope.allTrails[i].segments[j].active == false){
-							trails[trail.num].setMap(map);
-							$scope.allTrails[i].segments[j].active = true;
-						}
-						else {
-							trails[trail.num].setMap(null);
-							$scope.allTrails[i].segments[j].active = false;
-						}
+		$scope.toggleSegment = function(toggledSegment) {
+			console.log(((toggledSegment.active) ? "Hiding" : "Showing") + " SEGMENT " + toggledSegment.name + " #" + trails[toggledSegment.num].style.segment);
+			_.forEach($scope.allTrails, function(trail) {
+				_.find(trail.segments, function(segment) {
+				// find the toggled segment in the $scope.allTrails.segments[], display it, change it to active state
+					if (segment.num == toggledSegment.num) {
+						var mapStatus = (segment.active) ? null : map;
+						trails[toggledSegment.num].setMap(mapStatus);
+						segment.active = !segment.active;
 					}
-				}
-			}
+				});
+			});
 		}
 
 		// $scope.toggleTrail() - show/hide all segments of a certain trail
-		$scope.toggleTrail = function(trail) {
-			var rightTrail;
-			console.log(((trail.active) ? "HIDING TRAIL " : "SHOWING TRAIL ") + trail.name);
-			for (var i=0;i<$scope.allTrails.length;i++) {
-				if ($scope.allTrails[i].id == trail.id) { rightTrail = i }
-				for (var j=0;j<$scope.allTrails[i].segments.length;j++) {
-					if ($scope.allTrails[i].segments[j].id == trail.id) {
-						if ($scope.allTrails[rightTrail].active) {
-							trails[$scope.allTrails[i].segments[j].num].setMap(null);
-							$scope.allTrails[i].segments[j].active = false;
-						}
-						else {
-							trails[$scope.allTrails[i].segments[j].num].setMap(map);
-							$scope.allTrails[i].segments[j].active = true;
-						}
-					}
+		$scope.toggleTrail = function(toggledTrail) {
+			var activeState;
+			_.forEach($scope.allTrails, function(trail, i) {
+				if (trail.id == toggledTrail.id) {
+					activeState = !trail.active;
+					trail.active = !trail.active;
+					console.log(((activeState) ? "Hiding" : "Showing") + ' TRAIL ' + trail.name);
+					var activeMap = (trail.active) ? null : map;
+					_.forEach(trail.segments, function(segment, j) {
+						trails[segment.num].setMap(activeMap);
+						segment.active = activeState;
+					});
 				}
-			}
-			$scope.allTrails[rightTrail].active = ($scope.allTrails[rightTrail].active) ? false : true;
+			});
 		}
 
 		// $scope.toggleDifficulty() - show/hide all trails of a certain difficulty
-		$scope.toggleDifficulty = function(difficulty) {
-			var diffNum;
-			angular.forEach($scope.difficulties, function(value, key) {
-				if (value.shortName == difficulty) { diffNum = key; } 
+		$scope.toggleDifficulty = function(toggledDifficulty) {
+			var activeState;
+			// change difficulty active state
+			_.forEach($scope.difficulties, function(difficulty) {
+				if (difficulty.shortName == toggledDifficulty) {
+					activeState = !difficulty.active;
+					difficulty.active = !difficulty.active;
+				}
 			});
-			if ($scope.difficulties[diffNum].active == false) {
-				console.log("SHOWING DIFFICULTY " + difficulty);
-				$scope.difficulties[diffNum].active = true;
-				for (var i=0;i<$scope.allTrails.length;i++) {
-					for (var j=0;j<$scope.allTrails[i].segments.length;j++) {
-						if ($scope.allTrails[i].segments[j].difficulty == difficulty) {
-							trails[$scope.allTrails[i].segments[j].num].setMap(map);
-							$scope.allTrails[i].segments[j].active = true;
-						}
-					}
+			_.forEach($scope.allTrails, function(trail, i) {
+				if (trail.difficulty == toggledDifficulty) {
+					console.log(((trail.active) ? "Hiding" : "Showing") + ' DIFFICULTY ' + getDifficultyName(trail.difficulty));
+					var activeMap = (trail.active) ? null : map;
+					// display trails[] segments on the map, change $scope.allTrails[].segments to active state
+					_.forEach(trail.segments, function(segment, j) {
+						trails[segment.num].setMap(activeMap);
+						segment.active = activeState;
+					});
 				}
-			}
-			else {
-				console.log("HIDING DIFFICULTY " + difficulty);
-				$scope.difficulties[diffNum].active = false;
-				for (var i=0;i<$scope.allTrails.length;i++) {
-					for (var j=0;j<$scope.allTrails[i].segments.length;j++) {
-						if ($scope.allTrails[i].segments[j].difficulty == difficulty) {
-							trails[$scope.allTrails[i].segments[j].num].setMap(null);
-							$scope.allTrails[i].segments[j].active = false;
-						}
-					}
-				}
-			}
-		}
-
-		$scope.showAllTrails = function() {
-			for (var i=0;i<$scope.allTrails.length;i++) {
-				for (var j=0;j<$scope.allTrails[i].segments.length;j++) {
-					trails[$scope.allTrails[i].segments[j].num].setMap(map);
-					$scope.allTrails[i].segments[j].active = true;
-				}
-				$scope.allTrails[i].active = true;
-			}
-			angular.forEach($scope.difficulties, function(value, key) {
-				value.active = true;
+				// change $scope.allTrails[] trail to active state
+				trail.active = activeState
 			});
 		}
 
-		$scope.hideAllTrails = function() {
-			for (var i=0;i<$scope.allTrails.length;i++) {
-				for (var j=0;j<$scope.allTrails[i].segments.length;j++) {
-					if($scope.allTrails[i].segments[j].name != "Chair Lift") {
-						trails[$scope.allTrails[i].segments[j].num].setMap(null);
-						$scope.allTrails[i].segments[j].active = false;
-					}
-				}
-				$scope.allTrails[i].active = false;
-			}
-			angular.forEach($scope.difficulties, function(value, key) {
-				value.active = false; 
+		// activeState=true shows all trails, =false hides all trails
+		$scope.toggleAllTrails = function(activeState) {
+			console.log(((activeState) ? "Showing" : "Hiding") + " ALL TRAILS");
+			var activeMap = (activeState) ? map : null;
+			_.forEach($scope.allTrails, function(trail, i) {
+				// display trails[] segments on the map, change $scope.allTrails[].segments to active state
+				_.forEach(trail.segments, function(segment, j) {
+					trails[segment.num].setMap(activeMap);
+					segment.active = activeState;
+				});
+				// change $scope.allTrails[] to active state
+				trail.active = activeState;
+			});
+			// change $scope.difficulties to active state
+			_.forEach($scope.difficulties, function(value, key) {
+				value.active = activeState;
 			});
 		}
 
+		// overlayControls function to set the google map type
 		$scope.setMapType = function(type) {
 			(type === "Satellite") ? map.setMapTypeId(google.maps.MapTypeId.SATELLITE) : map.setMapTypeId(google.maps.MapTypeId.TERRAIN);
 		}

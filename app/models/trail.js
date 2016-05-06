@@ -7,7 +7,8 @@ var TrailSchema = new Schema({
 		name: {type: String},
 		id: {type: Number},
 		difficulty: {type: String},
-		segment: {type: Number}
+		segment: {type: Number},
+		description: {type: String}
 	},
 	geometry: {
 		type: {type: String},
