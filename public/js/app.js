@@ -300,18 +300,18 @@ app.controller('MainCtrl', function($scope, myService) {
 
 		// $scope.toggleTrail() - show/hide all segments of a certain trail
 		$scope.toggleTrail = function(toggledTrail) {
-			var activeState;
+			var rightTrail;
+			var activeMap = (toggledTrail.active) ? null : map;
+			console.log(((toggledTrail.active) ? "Hiding" : "Showing") + ' TRAIL ' + toggledTrail.name);
 			_.forEach($scope.allTrails, function(trail, i) {
-				if (trail.id == toggledTrail.id) {
-					activeState = !trail.active;
-					trail.active = !trail.active;
-					console.log(((activeState) ? "Hiding" : "Showing") + ' TRAIL ' + trail.name);
-					var activeMap = (trail.active) ? null : map;
-					_.forEach(trail.segments, function(segment, j) {
+				if (trail.id == toggledTrail.id) { rightTrail = i }
+				_.forEach(trail.segments, function(segment, j) {
+					if (segment.id == toggledTrail.id) {
 						trails[segment.num].setMap(activeMap);
-						segment.active = activeState;
-					});
-				}
+						segment.active = !(toggledTrail.active);
+					}
+				});
+				trail.active = !trail.active;
 			});
 		}
 
@@ -336,7 +336,7 @@ app.controller('MainCtrl', function($scope, myService) {
 					});
 				}
 				// change $scope.allTrails[] trail to active state
-				trail.active = activeState
+				trail.active = activeState;
 			});
 		}
 

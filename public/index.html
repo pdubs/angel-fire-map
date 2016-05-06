@@ -14,11 +14,13 @@
 	<link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
 </head>
 <body ng-app="afMap" ng-controller="MainCtrl">
-	<div id="overlayControls">
-		<div class="mapType" ng-repeat="type in mapTypes" ng-click="setMapType(type)">{{ type }}</div>
-	</div>
 
-	<div id="mapControls">
+	<!--<div id="overlayControls">
+		<div class="mapType" ng-repeat="type in mapTypes" ng-click="setMapType(type)">{{ type }}</div>
+	</div>-->
+
+
+	<div id="mapControls"><a class="closeControls" href="#">&#10006;</a>
 		<div class="diffHeader ea">
 			<label ng-click="toggleDifficulty('e')">
 				<img class="diffControl" src="img/e.jpg">
@@ -80,6 +82,7 @@
 	</div>
 	
 
+	<div id="mapControlToggle"><a href="#mapControls">&#9776;</a></div>
 	<div id="map-canvas"></div>
 </body>
 </html>

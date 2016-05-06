@@ -14,20 +14,52 @@ body {
 	position: relative;
 }
 
-/* mapControls */
+
+/* slideout sidebar mapControls */
 body #mapControls {
-	position: absolute;
-	margin: 5px 0px 0px 5px;
+	/* Collapsed */
 	background-color: #ebedea;
-	padding: 1px 4px 4px 4px;
 	z-index: 999;
-	opacity: 1;
-	left: 0px;
 	border-radius: 2px;
-	-webkit-box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.43);
-	-moz-box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.43);
-	box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.43);
-	width: 180px;
+	width: 0; 
+	overflow: hidden;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	padding: 0;
+}
+
+body #map-canvas {
+	width: 100%;
+	float: right;
+}
+
+body #mapControls {
+	transition: width 0.3s ease;
+}
+
+body .closeControls {
+	text-decoration: none;
+	color: black !important;
+	float: right;
+	opacity: 0.4;
+}
+
+body #mapControlToggle a {
+	background-color: lightgrey;
+    color: black !important;
+    height: 16px;
+    position: absolute;
+    z-index: 998;
+    vertical-align: top;
+    line-height: 14px;
+    text-decoration: none;
+    font-size: 18px;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    text-indent: 1px;
 }
 
 body #mapControls .mapControl {
@@ -197,28 +229,107 @@ body .gm-style-iw .iw-content .iw-description {
 
 
 
-/* mobile */
+/* mobile <767px */
 @media (max-width: 767px) {
+	html, body, #map-canvas {
+		top: 0;
+	}
+	
+	body #mapControls:target {
+	  width: 100%;
+	  overflow-y: auto;
+	}
+	body #mapControls:target + #map-canvas {
+	  width: 0;
+	}
 
 }
 
-/* tablet */
+/* tablet 768px-1024px */
 @media (min-width: 768px) {
-
+	html, body, #map-canvas {
+		top: 0;
+	}
+	
+	body #mapControls:target {
+	  width: 100%;
+	  overflow-y: auto;
+	}
+	body #mapControls:target + #map-canvas {
+	  width: 0;
+	}
 }
 
-/* desktop */
-@media (min-width: 992px) {
+/* mobile + tablet <1024px */
+@media (max-width: 1024px) {
+	body #mapControls .closeControls {
+		width: 36px;
+		height: 40px;
+		font-size: 38px;
+		vertical-align: top;
+		line-height: 36px;
+	}
+	body #mapControls .diffHeader {
+		height: 28px;
+		margin: 5px 0;
+	}
+	body #mapControls .diffHeader label {
+	    display: block;
+	    width: 100%;
+	}
+	body #mapControls .diffHeader .diffControl {
+		width: 30px;
+		height: 26px;
+	}
+	body #mapControls .diffHeader .diffName {
+		font-size: 20px;	
+	}
+	body #mapControls .mapControl {
+		height: 10%;
+		margin: 10px 0;
+	}
+	body #mapControls .mapControl .trailName {
+		font-size: 49px;
+		width: 50%;
+		display: inline-block;
+		line-height: 76px;
+	}
+	body #mapControls .mapControl .parkId {
+		width: 45px;
+	}
+	body #mapControls .mapControl input {
+		width: 78px;
+		height: 78px;
+		margin: 0 10px;
+	}
+	body #mapControlToggle a {
+		height: 32px;
+		width: 34px;
+		font-size: 36px;
+		line-height: 29px;
+	}
+}
+
+/* desktop >1025px */
+@media (min-width: 1025px) {
 	body {
 		top: 0;
 	}
-
+	body #mapControls:target {
+		width: 190px;
+	}
+	body #mapControls:target + #map-canvas {
+		width: auto;
+	}
 	body #map-canvas {
 		width: 100%;
 		height: 100%;
 		top: 0px;
 		margin-left: 0;
 		margin-top: 0;
+	}
+	body #mapControls {
+		height: 545px;
 	}
 }
 
