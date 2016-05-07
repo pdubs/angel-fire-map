@@ -14,7 +14,6 @@ body {
 	position: relative;
 }
 
-
 /* slideout sidebar mapControls */
 body #mapControls {
 	/* Collapsed */
@@ -44,6 +43,7 @@ body .closeControls {
 	color: black !important;
 	float: right;
 	opacity: 0.4;
+	margin-right: 2px;
 }
 
 body #mapControlToggle a {
@@ -60,19 +60,36 @@ body #mapControlToggle a {
     left: 3px;
     width: 18px;
     text-indent: 1px;
+	border: 2px solid transparent;
+	border-radius: 2px;
+	-webkit-box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.43);
+	-moz-box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.43);
+	box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.43);
+	background-color: #ebedea;
+	opacity: 0.8;
 }
 
+body #mapControlToggle a:hover {
+	border: 2px solid gray;
+	opacity: 1;
+}
+
+/* mapControls */
 body #mapControls .mapControl {
 	margin: 0 0 1px 0;
     height: 12px;
 }
 
-body #mapControls .mapControl .trailName {
+body #mapControls .mapControl .trailRow {
 	font-size: 11px;
 	display: inline-block;
 	cursor: pointer;
 	vertical-align: top;
 	width: 107px;
+}
+
+body #mapControls .mapControl .trailName {
+	display: inline-block;
 }
 
 body #mapControls .mapControl .parkId {
@@ -111,15 +128,15 @@ body #mapControls .diffHeader .diffName {
 	cursor: pointer;
 }
 
-body #mapControls .ea {
+body #mapControls .e {
 	border-top: 1px solid #66CD00;
 	border-bottom: 1px solid #66CD00;
 }
-body #mapControls .in {
+body #mapControls .i {
 	border-top: 1px solid #1ca4d5;
 	border-bottom: 1px solid #1ca4d5;
 }
-body #mapControls .ad {
+body #mapControls .a {
 	border-top: 1px solid #fbf136;
 	border-bottom: 1px solid #fbf136;
 }
@@ -165,9 +182,9 @@ body #mapControls #aflogo {
 
 /* overlayControls */
 body #overlayControls {
-	top: 5px;
+	top: 3px;
 	position: absolute;
-	left: 202px;
+	left: 189px;
 	height: 15px;
 	opacity: 1.0;
 	z-index: 9;
@@ -223,51 +240,40 @@ body .gm-style-iw .iw-content .iw-description {
 	
 }
 
-
-
-
-
-
-
 /* mobile <767px */
 @media (max-width: 767px) {
-	html, body, #map-canvas {
-		top: 0;
-	}
 	
-	body #mapControls:target {
-	  width: 100%;
-	  overflow-y: auto;
-	}
-	body #mapControls:target + #map-canvas {
-	  width: 0;
-	}
-
 }
 
 /* tablet 768px-1024px */
-@media (min-width: 768px) {
-	html, body, #map-canvas {
-		top: 0;
-	}
-	
-	body #mapControls:target {
-	  width: 100%;
-	  overflow-y: auto;
-	}
-	body #mapControls:target + #map-canvas {
-	  width: 0;
-	}
+@media (min-width: 768px) and (max-width: 1024px) {
+
 }
 
 /* mobile + tablet <1024px */
 @media (max-width: 1024px) {
+	html, body, #map-canvas {
+		top: 0;
+	}
+	
+	body #mapControls:target {
+	  width: 60%;
+	  overflow-y: auto;
+	}
+	body #mapControls:target + #map-canvas {
+	  width: 40%;
+	}
 	body #mapControls .closeControls {
 		width: 36px;
 		height: 40px;
 		font-size: 38px;
 		vertical-align: top;
 		line-height: 36px;
+		position: fixed;
+		left: 56%;
+		top: 1%;
+		opacity: 0.6;
+		z-index: 9999;
 	}
 	body #mapControls .diffHeader {
 		height: 28px;
@@ -285,28 +291,34 @@ body .gm-style-iw .iw-content .iw-description {
 		font-size: 20px;	
 	}
 	body #mapControls .mapControl {
-		height: 10%;
+		height: auto;
 		margin: 10px 0;
 	}
-	body #mapControls .mapControl .trailName {
-		font-size: 49px;
-		width: 50%;
+	body #mapControls .mapControl .trailRow {
+		font-size: 28px;
+		width: 49%;
 		display: inline-block;
-		line-height: 76px;
+		line-height: 40px;
+		font-weight: bold;
 	}
 	body #mapControls .mapControl .parkId {
 		width: 45px;
 	}
 	body #mapControls .mapControl input {
-		width: 78px;
-		height: 78px;
+		width: 40px;
 		margin: 0 10px;
+		height: 40px;
 	}
 	body #mapControlToggle a {
 		height: 32px;
 		width: 34px;
 		font-size: 36px;
 		line-height: 29px;
+	}
+	body #mapControls .allControls .showAllTrails,
+	body #mapControls .allControls .hideAllTrails {
+		font-size: 26px;
+		width: 49%;
 	}
 }
 

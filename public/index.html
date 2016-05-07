@@ -15,72 +15,31 @@
 </head>
 <body ng-app="afMap" ng-controller="MainCtrl">
 
-	<!--<div id="overlayControls">
+	<div id="overlayControls">
 		<div class="mapType" ng-repeat="type in mapTypes" ng-click="setMapType(type)">{{ type }}</div>
-	</div>-->
+	</div>
 
-
-	<div id="mapControls"><a class="closeControls" href="#">&#10006;</a>
-		<div class="diffHeader ea">
-			<label ng-click="toggleDifficulty('e')">
-				<img class="diffControl" src="img/e.jpg">
-				<div class="diffName">Easiest</div>
-			</label>
-		</div>
-		<div class="mapControl trail" ng-repeat="trail in allTrails | orderBy:['+id'] | filter: {difficulty: 'e'}: true" ng-if="trail.name!='Chair Lift'">
-			<div class="trailName" ng-click="toggleTrail(trail)">
-				<div class="parkId">{{ trail.id }}</div> - {{trail.name}}
+	<div id="mapControls">
+		<a class="closeControls" href="#">&#10006;</a>
+		<div class="mapDifficulty" ng-repeat="difficulty in difficulties">
+			<div class="diffHeader" ng-class="difficulty.shortName">
+				<label ng-click="toggleDifficulty(difficulty.shortName)">
+					<img class="diffControl" ng-src="img/{{ difficulty.shortName }}.jpg">
+					<div class="diffName">{{ difficulty.name }}</div>
+				</label>
 			</div>
-			<input class="segment" ng-repeat="segment in trail.segments" type="checkbox" ng-click="toggleSegment(segment)" ng-checked="segment.active">
-		</div>
-
-		<div class="diffHeader in">
-			<label ng-click="toggleDifficulty('i')">
-				<img class="diffControl" src="img/i.jpg">
-				<div class="diffName">Intermediate</div>
-			</label>
-		</div>
-		<div class="mapControl trail" ng-repeat="trail in allTrails | orderBy:['+id'] | filter: {difficulty: 'i'}: true" ng-if="trail.name!='Chair Lift'">
-			<div class="trailName" ng-click="toggleTrail(trail)">
-				<div class="parkId">{{ trail.id }}</div> - {{trail.name}}
+			<div class="mapControl trail" ng-repeat="trail in allTrails | orderBy:['+id'] | filter: {difficulty: difficulty.shortName}: true" ng-if="trail.name!='Chair Lift'">
+				<div class="trailRow" ng-click="toggleTrail(trail)"><div class="parkId">{{ trail.id }}</div>&nbsp;<div class="trailName">- {{trail.name}}</div></div>
+				<input class="segment" ng-repeat="segment in trail.segments" type="checkbox" ng-click="toggleSegment(segment)" ng-checked="segment.active">
 			</div>
-			<input class="segment" ng-repeat="segment in trail.segments" type="checkbox" ng-click="toggleSegment(segment)" ng-checked="segment.active">
-		</div>
-
-		<div class="diffHeader ad">
-			<label ng-click="toggleDifficulty('a')">
-				<img class="diffControl" src="img/a.jpg">
-				<div class="diffName">Advanced</div>
-			</label>
-		</div>
-		<div class="mapControl trail" ng-repeat="trail in allTrails | orderBy:['+id'] | filter: {difficulty: 'a'}: true" ng-if="trail.name!='Chair Lift'">
-			<div class="trailName" ng-click="toggleTrail(trail)">
-				<div class="parkId">{{ trail.id }}</div> - {{trail.name}}
-			</div>
-			<input class="segment" ng-repeat="segment in trail.segments" type="checkbox" ng-click="toggleSegment(segment)" ng-checked="segment.active">
-		</div>
-
-		<div class="diffHeader ex">
-			<label ng-click="toggleDifficulty('ex')">
-				<img class="diffControl" src="img/ex.jpg">
-				<div class="diffName">Expert Only</div>
-			</label>
-		</div>
-		<div class="mapControl trail" ng-repeat="trail in allTrails | orderBy:['+id'] | filter: {difficulty: 'ex'}: true" ng-if="trail.name!='Chair Lift'">
-			<div class="trailName" ng-click="toggleTrail(trail)">
-				<div class="parkId">{{ trail.id }}</div> - {{trail.name}}
-			</div>
-			<input class="segment" ng-repeat="segment in trail.segments" type="checkbox" ng-click="toggleSegment(segment)" ng-checked="segment.active">
 		</div>
 
 		<div class="allControls">
 			<div class="showAllTrails" ng-click="toggleAllTrails(true)">Show All</div>
 			<div class="hideAllTrails" ng-click="toggleAllTrails(false)">Hide All</div>
 		</div>
-
 		<div class="center"><img id="aflogo" src="img/af_logo.png"></div>
 	</div>
-	
 
 	<div id="mapControlToggle"><a href="#mapControls">&#9776;</a></div>
 	<div id="map-canvas"></div>
