@@ -9,14 +9,13 @@ html, body, #map-canvas {
 body {
 	font-family: 'Lato', sans-serif;
 	background-color: white;
-	margin: 0;
-	top: -26px;
 	position: relative;
+	margin: 0;
 }
 
-/* slideout sidebar mapControls */
+/* mapControls */
+/*   slideout sidebar */
 body #mapControls {
-	/* Collapsed */
 	background-color: #ebedea;
 	z-index: 999;
 	border-radius: 2px;
@@ -27,15 +26,12 @@ body #mapControls {
 	left: 0;
 	height: 100%;
 	padding: 0;
+	transition: width 0.3s ease;
 }
 
 body #map-canvas {
 	width: 100%;
 	float: right;
-}
-
-body #mapControls {
-	transition: width 0.3s ease;
 }
 
 body .closeControls {
@@ -213,6 +209,24 @@ body #overlayControls .mapType {
 body #overlayControls .mapType:hover {
 	border: 2px solid gray;
 	opacity: 1;
+}
+
+body #elevation_container {
+    width: 350px;
+    position: absolute;
+    z-index: 9;
+    bottom: 5%;
+    right: 5%;
+    display: none;
+	background-color: transparent;
+}
+body #elevation_container .hideElevation {
+	cursor: pointer;
+	float: right;
+	margin-right: 3px;
+}
+body #elevation_container #elevation_chart {
+	background-color: transparent;
 }
 
 /* infoWindows */

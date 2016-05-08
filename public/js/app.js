@@ -1,6 +1,12 @@
 var map;
 var mapCenter = new google.maps.LatLng(36.379, -105.254);
 var app = angular.module('afMap', []);
+var elevator;
+
+// Load the Visualization API and the columnchart package.
+google.load('visualization', '1', {
+    packages: ['columnchart']
+});
 
 function returnColor(difficulty) {
 	switch (difficulty) {
@@ -34,8 +40,8 @@ function getDifficultyName(difficulty) {
 app.factory('myService', function($http) {
 	return {
 		getTrailData: function() {
-			// return $http.get('http://localhost:8080/api/trails/').then(function(result) {
-		    return $http.get('http://107.170.53.46:8080/api/trails/').then(function(result) {
+		    // return $http.get('http://107.170.53.46:8080/api/trails/').then(function(result) {
+			return $http.get('http://localhost:8080/api/trails/').then(function(result) {
 		    	return result.data;
 		    });
 		}
@@ -96,6 +102,7 @@ app.controller('MainCtrl', function($scope, myService) {
 			// show all trails by default
 			$scope.toggleAllTrails('true');
 
+			elevator = new google.maps.ElevationService();
 		}
 
 		function setTrails() {
@@ -180,6 +187,15 @@ app.controller('MainCtrl', function($scope, myService) {
 							marker.setVisible(false);
 							map.setCenter({lat: trail.style.center[1], lng: trail.style.center[0]});
 							infowindows[key].open(map, marker);
+
+							var coords = trailData[trail.style.num].geometry.coordinates;
+							var path = [];
+							_.forEach(coords, function(point, i) {
+								point.length = 2;
+								path.push(new google.maps.LatLng(point[1],point[0]));
+							});
+
+							drawPath(path);
 						}
 					})(trail, key, map));
 				}
@@ -283,6 +299,74 @@ app.controller('MainCtrl', function($scope, myService) {
 			});
 		}
 
+		function drawPath(path) {
+			chart = new google.visualization.ColumnChart(document.getElementById('elevation_chart'));
+			var pathRequest = {
+				'path': path,
+				'samples': 256
+			};
+			elevator.getElevationAlongPath(pathRequest, plotElevation);
+		}
+
+		function plotElevation(results, status) {
+			if (status != google.maps.ElevationStatus.OK) {
+				return;
+			}
+			var elevations = results;
+			var elevationPath = [];
+			_.forEach(results, function(point, i){
+				elevationPath.push(elevations[i].location);
+			});
+
+			var data = new google.visualization.DataTable();
+			data.addColumn('string', 'Distance');
+			data.addColumn('number', 'Elevation');
+
+			var distance, prevLat, prevLng, currLat, currLng, p1, p2;
+			var distances = [];
+
+			_.forEach(results, function(point, i) {
+				prevIdx = (i > 0) ? i - 1 : i;
+
+				var p1 = new google.maps.LatLng(results[prevIdx].location.lat(), results[prevIdx].location.lng());
+				var p2 = new google.maps.LatLng(results[i].location.lat(), results[i].location.lng());
+
+				distance = (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) * 3.28084).toFixed(0);
+				distance = +distance;
+				if (i > 0) {
+					distances[i] = distances[i - 1] + distance;
+				}
+				else {
+					distances[i] = distance;
+				}
+			});
+
+			for (var i = 0; i < results.length; i++) {
+				data.addRow([distances[i].toString(), (elevations[i].elevation * 3.28084)]);
+			}
+
+			var elevationData = [];
+			_.forEach(elevations, function(elevationObj, i){
+				elevationData.push(elevationObj.elevation);
+			});
+			
+			var change = ((_.max(elevationData) - _.min(elevationData)) * 3.28084).toFixed(0) + ' ft vertical descent';
+
+			document.getElementById('elevation_container').style.display = 'block';
+			chart.draw(data, {
+				height: 150,
+				legend: 'none',
+				smoothLine: 'true',
+				titleFontSize: 12,
+				axisFontSize: 10,
+				title: change,
+				titleY: 'Elevation (ft)',
+				titleX: 'Distance (ft)',
+				enableTooltip: false
+			});
+
+		}
+
 		// $scope.toggleSegment() - show/hide certain segment
 		$scope.toggleSegment = function(toggledSegment) {
 			console.log(((toggledSegment.active) ? "Hiding" : "Showing") + " SEGMENT " + toggledSegment.name + " #" + trails[toggledSegment.num].style.segment);
@@ -357,6 +441,10 @@ app.controller('MainCtrl', function($scope, myService) {
 			_.forEach($scope.difficulties, function(value, key) {
 				value.active = activeState;
 			});
+		}
+
+		$scope.hideElevation = function() {
+			document.getElementById('elevation_container').style.display = 'none';
 		}
 
 		// overlayControls function to set the google map type
