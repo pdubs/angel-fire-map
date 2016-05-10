@@ -2,20 +2,24 @@
 
 ```
 /angel-fire-map
-  ├─ /server.js             # API Server
-  ├─ /app/models/trail.js   # Database Schema
-  ├─ /public/js/app.js      # Front-end Controller
-  └─ /public/index.html     # HTML Index
+  ├─ /server.js                # API Server
+  ├─ /app/models/trail.js      # Database Schema
+  ├─ /public/js/controller.js  # Front-end Controller
+  └─ /public/index.html        # HTML Index
 ```
 
-MongoDB hosted by mlab to store GeoJSON trails
+MongoDB for GeoJSON data store, Node/Express API server to fetch & serve data, Angular front-end (using google maps & visualization JS APIs)
 
-Express API server to provide trail data
+Map Controls:
+	Left sidebar (`mapControls`) control which trail segments are displayed
+		By Segment    (specific segment)
+		By Trail      (all segments of a trail)
+		By Difficulty (all segments of all trails of a difficulty)
+		Show/Hide All (all segments of all trails of all difficulties)
 
-Angular application utilizing Google Maps JS API
+	`overlayControls` control which type of view is active (Satellite vs. Topographic/Terrain)
 
-npm Packages:
-- express
-- mongoose
-- geolocation-marker
-- lodash
+Map Interactions:
+	trail hover: increased line width & opacity
+	trail click: center map on trail segment, display infoWindow w/ trail details, display elevation profile in `#elevation_chart`
+	marker click: zoom & center map on marker location

@@ -1,60 +1,18 @@
-var map;
-var mapCenter = new google.maps.LatLng(36.379, -105.254);
-var app = angular.module('afMap', []);
-var elevator;
+var map, elevator;
 
 // Load the Visualization API and the columnchart package.
 google.load('visualization', '1', {
     packages: ['columnchart']
 });
 
-function returnColor(difficulty) {
-	switch (difficulty) {
-		case "e":
-			return '#66CD00';
-		case "i":
-			return '#1ca4d5';
-		case "a":
-			return '#fbf136';
-		case "ex":
-			return '#eb573a';
-		case "p":
-			return '#000000';
-	}
-}
+angular.module('afMap').controller('MainCtrl', MainCtrl);
 
-function getDifficultyName(difficulty) {
-	switch (difficulty) {
-		case "e":
-			return 'Easiest';
-		case "i":
-			return 'Intermediate';
-		case "a":
-			return 'Advanced';
-		case "ex":
-			return 'Expert Only';
-	}
-}
-
-// angular service to return array of geoJSON trail objects
-app.factory('myService', function($http) {
-	return {
-		getTrailData: function() {
-		    // return $http.get('http://107.170.53.46:8080/api/trails/').then(function(result) {
-			return $http.get('http://localhost:8080/api/trails/').then(function(result) {
-		    	return result.data;
-		    });
-		}
-	}
-});
-
-// angular application controller
-app.controller('MainCtrl', function($scope, myService) {
-	// service returns trail data before controller logic begins
-	myService.getTrailData().then(function(trailData) {
+function MainCtrl($scope, dataService) {
+	dataService.getTrailData().then(function(trailData) {
 		var trails = [];
 		var markers = [];
 		var infowindows = [];
+		var activeKey = '';
 		var markerData = [
 			{lat: 36.372149, lng: -105.245045, icon: 'img/a.png'},
 			{lat: 36.372304, lng: -105.252478, icon: 'img/b.png'},
@@ -69,9 +27,8 @@ app.controller('MainCtrl', function($scope, myService) {
 		$scope.difficulties = [];
 
 		function initialize() {
-			// init google.maps.MapOptions
 			var mapOptions = {
-				center: mapCenter,
+				center: (new google.maps.LatLng(36.379, -105.254)),
 				zoom: 15,
 				disableDefaultUI: true,
 				disableDoubleClickZoom: false,
@@ -107,7 +64,6 @@ app.controller('MainCtrl', function($scope, myService) {
 
 		function setTrails() {
 			_.forEach(trailData, function(trail, key) {
-				// define center position + remove elevation
 				center = trail.geometry.coordinates[Math.round(trail.geometry.coordinates.length / 2)];
 				(center.length != 2) ? center.pop() : center;
 
@@ -130,7 +86,6 @@ app.controller('MainCtrl', function($scope, myService) {
 				trail = trails[key];
 
 				if (trail.style.name != "Chair Lift") {
-					// event listener to increase weight of trail on mouseover
 					google.maps.event.addListener(trail, 'mouseover', (function(trail, key) {
 						return function() {
 							trail.setStyle({
@@ -147,8 +102,6 @@ app.controller('MainCtrl', function($scope, myService) {
 							});
 						}
 					})(trail, key));
-
-					// event listener to decrease weight of trail on mouseout
 					google.maps.event.addListener(trail, 'mouseout', (function(trail, key) {
 						return function() {
 							trail.setStyle({
@@ -166,7 +119,6 @@ app.controller('MainCtrl', function($scope, myService) {
 						}
 					})(trail, key));
 
-					// create infoWindow content
 					var contentString =
 						'<div class="iw-content">' +
 							'<div class="iw-header">' + trail.style.id + ' - ' + trail.style.name + ' (#' + trail.style.segment + ')' + '</div>' +
@@ -174,16 +126,17 @@ app.controller('MainCtrl', function($scope, myService) {
 							'<div class="iw-description">' + trail.style.description + '</div>' +
 						'</div>';
 
-					// create infoWindow
 					infowindows[key] = new google.maps.InfoWindow({
 						content: contentString
 					});
 
-					// event listener to move to center of segment and show infoWindow on click
 					google.maps.event.addListener(trail, 'click', (function(trail, key, map) {
 						return function() {
+							if (activeKey != '') {
+								infowindows[activeKey].close();
+							}
 							console.log(trail.style.name + " has been clicked");
-							marker = new google.maps.Marker({icon:{}, map:map, position:{lat: trail.style.center[1], lng: trail.style.center[0]}, title:trail.style.name});
+							marker = new google.maps.Marker({map:map, position:{lat: trail.style.center[1], lng: trail.style.center[0]}, title:trail.style.name});
 							marker.setVisible(false);
 							map.setCenter({lat: trail.style.center[1], lng: trail.style.center[0]});
 							infowindows[key].open(map, marker);
@@ -196,6 +149,7 @@ app.controller('MainCtrl', function($scope, myService) {
 							});
 
 							drawPath(path);
+							activeKey = key;
 						}
 					})(trail, key, map));
 				}
@@ -221,7 +175,7 @@ app.controller('MainCtrl', function($scope, myService) {
 						}]
 					});
 				}
-				// if the current trail is a segment of a previous trail, add it to $scope.allTrails[].segments[]
+				// if the current trail is a segment of a previous trail, add it to $scope.allTrails[i].segments[]
 				else {
 					_.forEach($scope.allTrails, function(allTrail, j) {
 						if (trail.style.id == allTrail.id) {
@@ -283,7 +237,6 @@ app.controller('MainCtrl', function($scope, myService) {
 					origin: new google.maps.Point(0, 0),
 					anchor: new google.maps.Point(0, 0)
 				};
-				// create markers
 				marker = new google.maps.Marker({
 					position: new google.maps.LatLng(markerData[i].lat, markerData[i].lng),
 					map: map,
@@ -350,7 +303,10 @@ app.controller('MainCtrl', function($scope, myService) {
 				elevationData.push(elevationObj.elevation);
 			});
 			
-			var change = ((_.max(elevationData) - _.min(elevationData)) * 3.28084).toFixed(0) + ' ft vertical descent';
+			var trailVert = ((_.max(elevationData) - _.min(elevationData)) * 3.28084).toFixed(0);
+			var trailLength = (_.max(distances) / 5280).toFixed(1);
+			var trailGrade = ((trailVert / _.max(distances)) * 100).toFixed(0);
+			var trailInfo =  trailVert + ' ft descent - ' + trailLength + ' miles - ' + trailGrade + '% Average Grade';
 
 			document.getElementById('elevation_container').style.display = 'block';
 			chart.draw(data, {
@@ -359,7 +315,7 @@ app.controller('MainCtrl', function($scope, myService) {
 				smoothLine: 'true',
 				titleFontSize: 12,
 				axisFontSize: 10,
-				title: change,
+				title: trailInfo,
 				titleY: 'Elevation (ft)',
 				titleX: 'Distance (ft)',
 				enableTooltip: false
@@ -402,7 +358,6 @@ app.controller('MainCtrl', function($scope, myService) {
 		// $scope.toggleDifficulty() - show/hide all trails of a certain difficulty
 		$scope.toggleDifficulty = function(toggledDifficulty) {
 			var activeState;
-			// change difficulty active state
 			_.forEach($scope.difficulties, function(difficulty) {
 				if (difficulty.shortName == toggledDifficulty) {
 					activeState = !difficulty.active;
@@ -413,13 +368,11 @@ app.controller('MainCtrl', function($scope, myService) {
 				if (trail.difficulty == toggledDifficulty) {
 					console.log(((trail.active) ? "Hiding" : "Showing") + ' DIFFICULTY ' + getDifficultyName(trail.difficulty));
 					var activeMap = (trail.active) ? null : map;
-					// display trails[] segments on the map, change $scope.allTrails[].segments to active state
 					_.forEach(trail.segments, function(segment, j) {
 						trails[segment.num].setMap(activeMap);
 						segment.active = activeState;
 					});
 				}
-				// change $scope.allTrails[] trail to active state
 				trail.active = activeState;
 			});
 		}
@@ -429,15 +382,12 @@ app.controller('MainCtrl', function($scope, myService) {
 			console.log(((activeState) ? "Showing" : "Hiding") + " ALL TRAILS");
 			var activeMap = (activeState) ? map : null;
 			_.forEach($scope.allTrails, function(trail, i) {
-				// display trails[] segments on the map, change $scope.allTrails[].segments to active state
 				_.forEach(trail.segments, function(segment, j) {
 					trails[segment.num].setMap(activeMap);
 					segment.active = activeState;
 				});
-				// change $scope.allTrails[] to active state
 				trail.active = activeState;
 			});
-			// change $scope.difficulties to active state
 			_.forEach($scope.difficulties, function(value, key) {
 				value.active = activeState;
 			});
@@ -454,4 +404,32 @@ app.controller('MainCtrl', function($scope, myService) {
 
 		google.maps.event.addDomListener(window, "DOMContentLoaded", initialize());
 	});
-});
+}
+
+function returnColor(difficulty) {
+	switch (difficulty) {
+		case "e":
+			return '#66CD00';
+		case "i":
+			return '#1ca4d5';
+		case "a":
+			return '#fbf136';
+		case "ex":
+			return '#eb573a';
+		case "p":
+			return '#000000';
+	}
+}
+
+function getDifficultyName(difficulty) {
+	switch (difficulty) {
+		case "e":
+			return 'Easiest';
+		case "i":
+			return 'Intermediate';
+		case "a":
+			return 'Advanced';
+		case "ex":
+			return 'Expert Only';
+	}
+}

@@ -211,6 +211,7 @@ body #overlayControls .mapType:hover {
 	opacity: 1;
 }
 
+/* elevation profile */
 body #elevation_container {
     width: 350px;
     position: absolute;
@@ -223,7 +224,8 @@ body #elevation_container {
 body #elevation_container .hideElevation {
 	cursor: pointer;
 	float: right;
-	margin-right: 3px;
+	background-color: white;
+	padding: 0 5px;
 }
 body #elevation_container #elevation_chart {
 	background-color: transparent;
