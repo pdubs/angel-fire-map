@@ -8,8 +8,7 @@
   └─ /public/index.html        # HTML Index
 ```
 
-##### MEAN Stack
-  * MongoDB for GeoJSON data store, Node/Express API server to fetch & serve data, Angular front-end (using google maps & visualization JS APIs)
+<b>MEAN Stack</b>: MongoDB for GeoJSON data store, Node/Express API server to fetch & serve data, Angular front-end (using google maps & visualization JS APIs)
 
 ##### Map Controls:
   * Left sidebar mapControls control which trail segments are displayed
