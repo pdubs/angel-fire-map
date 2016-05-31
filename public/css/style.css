@@ -6,11 +6,25 @@ html, body, #map-canvas {
 	-ms-user-select: none;
 }
 
+body #map-canvas {
+	height: 100%;
+	top: 0px;
+	margin-left: 0;
+	margin-top: 0;
+}
+
 body {
 	font-family: 'Lato', sans-serif;
 	background-color: white;
 	position: relative;
 	margin: 0;
+}
+
+body #top-bar {
+	height: 47px;
+	background-color: #fff;
+	border-bottom: 1px solid #efefef;
+	box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 
 /* mapControls */
@@ -29,17 +43,37 @@ body #mapControls {
 	transition: width 0.3s ease;
 }
 
+body #mapControls:target {
+	width: 205px;
+	margin-top: 51px;
+	padding: 4px;
+	border-radius: 0;
+	height: auto;
+	background-color: #fff;
+	border-right: 1px solid #efefef;
+	border-bottom: 1px solid #efefef;
+	box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+body #mapControls:target + #map-canvas {
+	width: auto;
+}
+
+
 body #map-canvas {
 	width: 100%;
 	float: right;
 }
 
-body .closeControls {
-	text-decoration: none;
+body #mapControls .closeControls {
+	text-decoration: none;	
 	color: black !important;
 	float: right;
 	opacity: 0.4;
 	margin-right: 2px;
+}
+
+body #mapControls .closeControls:hover {
+	opacity: 1.0;
 }
 
 body #mapControlToggle a {
@@ -52,8 +86,8 @@ body #mapControlToggle a {
     line-height: 14px;
     text-decoration: none;
     font-size: 18px;
-    top: 3px;
-    left: 3px;
+    top: 14px;
+    left: 162px;
     width: 18px;
     text-indent: 1px;
 	border: 2px solid transparent;
@@ -73,7 +107,7 @@ body #mapControlToggle a:hover {
 /* mapControls */
 body #mapControls .mapControl {
 	margin: 0 0 1px 0;
-    height: 12px;
+  height: 12px;
 }
 
 body #mapControls .mapControl .trailRow {
@@ -169,16 +203,16 @@ body #mapControls .allControls .hideAllTrails:hover {
 	background-color: black;
 }
 
-body #mapControls #aflogo {
-	width: 137px;
-	margin: 0 auto;
-	position: relative;
-	display: block;
+body #aflogo {
+		width: 145px;
+		margin: 3px;
+		position: relative;
+		display: block;
 }
 
 /* overlayControls */
 body #overlayControls {
-	top: 3px;
+	top: 14px;
 	position: absolute;
 	left: 189px;
 	height: 15px;
@@ -226,6 +260,11 @@ body #elevation_container .hideElevation {
 	float: right;
 	background-color: white;
 	padding: 0 5px;
+	color: black;
+	opacity: 0.4;
+}
+body #elevation_container .hideElevation:hover {
+	opacity: 1.0;
 }
 body #elevation_container #elevation_chart {
 	background-color: transparent;
@@ -343,21 +382,4 @@ body .gm-style-iw .iw-content .iw-description {
 	body {
 		top: 0;
 	}
-	body #mapControls:target {
-		width: 190px;
-	}
-	body #mapControls:target + #map-canvas {
-		width: auto;
-	}
-	body #map-canvas {
-		width: 100%;
-		height: 100%;
-		top: 0px;
-		margin-left: 0;
-		margin-top: 0;
-	}
-	body #mapControls {
-		height: 545px;
-	}
 }
-
