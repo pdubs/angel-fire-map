@@ -7,7 +7,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
 	<script src="https://www.google.com/jsapi"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDXOg6GbI5i32LwJPfU2oSRG0ItKf9gB2M&libraries=geometry"></script>
 	<script src="js/geolocation-marker.js"></script>
 	<script src="js/module.js"></script>
 	<script src="js/dataService.js"></script>
@@ -16,8 +16,12 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body ng-app="afMap" ng-controller="MainCtrl">
-	<div id="overlayControls">
-		<div class="mapType" ng-repeat="type in mapTypes" ng-click="setMapType(type)">{{ type }}</div>
+	<div id="top-bar">
+		<img id="aflogo" src="img/af_logo.png">
+		<div id="mapControlToggle"><a href="#mapControls">&#9776;</a></div>
+		<div id="overlayControls">
+			<div class="mapType" ng-repeat="type in mapTypes" ng-click="setMapType(type)">{{ type }}</div>
+		</div>
 	</div>
 	<div id="mapControls">
 		<a class="closeControls" href="#">&#10006;</a>
@@ -39,9 +43,7 @@
 			<div class="showAllTrails" ng-click="toggleAllTrails(true)">Show All</div>
 			<div class="hideAllTrails" ng-click="toggleAllTrails(false)">Hide All</div>
 		</div>
-		<div class="center"><img id="aflogo" src="img/af_logo.png"></div>
 	</div>
-	<div id="mapControlToggle"><a href="#mapControls">&#9776;</a></div>
 	<div id="elevation_container">
 		<a class="hideElevation" ng-click="hideElevation()">&#10006;</a>
 		<div id="elevation_chart"></div>
