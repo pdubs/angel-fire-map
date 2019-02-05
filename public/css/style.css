@@ -37,7 +37,7 @@ body #mapControls {
 	overflow: hidden;
 	position: fixed;
 	top: 0;
-	left: 0;
+	left: 0px;
 	height: 100%;
 	padding: 0;
 	transition: width 0.3s ease;
@@ -54,9 +54,6 @@ body #mapControls:target {
 	border-bottom: 1px solid #efefef;
 	box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
-body #mapControls:target + #map-canvas {
-	width: auto;
-}
 
 
 body #map-canvas {
@@ -70,6 +67,7 @@ body #mapControls .closeControls {
 	float: right;
 	opacity: 0.4;
 	margin-right: 2px;
+	margin-top: 2px;
 }
 
 body #mapControls .closeControls:hover {
@@ -107,7 +105,7 @@ body #mapControlToggle a:hover {
 /* mapControls */
 body #mapControls .mapControl {
 	margin: 0 0 1px 0;
-  height: 12px;
+	height: 13px;
 }
 
 body #mapControls .mapControl .trailRow {
@@ -129,15 +127,15 @@ body #mapControls .mapControl .parkId {
 }
 
 body #mapControls .mapControl input {
-	margin: 0px 1px 0px 0px;
+	margin: 0px 2px 0px 0px;
 	vertical-align: top;
 	cursor: pointer;
 }
 
 body #mapControls .diffHeader {
 	height: 15px;
-	margin-bottom: 2px;
-	margin-top: 2px;
+	margin-bottom: 4px;
+	margin-top: 4px;
 }
 
 body #mapControls .diffHeader .diffControl {
@@ -280,19 +278,19 @@ body .gm-style-iw .iw-content {
 }
 
 body .gm-style-iw .iw-content .iw-header {
-	
+	padding: 5px 0;
+    font-weight: bold;
+    font-size: 14px;
 }
 
-body .gm-style-iw .iw-content .iw-segment {
-	
-}
 
 body .gm-style-iw .iw-content .iw-difficulty {
-	
+	padding: 5px 0;
 }
 
 body .gm-style-iw .iw-content .iw-description {
-	
+	max-width: 300px;
+	padding: 5px 0;
 }
 
 /* mobile <767px */

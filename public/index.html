@@ -6,7 +6,6 @@
 	<meta charset="utf-8">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
-	<script src="https://www.google.com/jsapi"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDXOg6GbI5i32LwJPfU2oSRG0ItKf9gB2M&libraries=geometry"></script>
 	<script src="js/geolocation-marker.js"></script>
 	<script src="js/module.js"></script>
@@ -43,10 +42,6 @@
 			<div class="showAllTrails" ng-click="toggleAllTrails(true)">Show All</div>
 			<div class="hideAllTrails" ng-click="toggleAllTrails(false)">Hide All</div>
 		</div>
-	</div>
-	<div id="elevation_container">
-		<a class="hideElevation" ng-click="hideElevation()">&#10006;</a>
-		<div id="elevation_chart"></div>
 	</div>
 	<div id="map-canvas"></div>
 </body>

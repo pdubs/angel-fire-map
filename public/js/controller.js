@@ -1,10 +1,5 @@
 var map, elevator;
 
-// Load the Visualization API and the columnchart package.
-google.load('visualization', '1', {
-    packages: ['columnchart']
-});
-
 angular.module('afMap').controller('MainCtrl', MainCtrl);
 
 function MainCtrl($scope, dataService) {
@@ -42,6 +37,7 @@ function MainCtrl($scope, dataService) {
 			// init map - new google maps object targeting the .map-canvas element
 			map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 			
+			// init location marker
 			var GeoMarker = new GeolocationMarker(map);
 
 			// init trails[] - google.maps.Data[] for trail overlays on map + hover/click functions
@@ -58,8 +54,6 @@ function MainCtrl($scope, dataService) {
 
 			// show all trails by default
 			$scope.toggleAllTrails('true');
-
-			elevator = new google.maps.ElevationService();
 		}
 
 		function setTrails() {
@@ -140,15 +134,6 @@ function MainCtrl($scope, dataService) {
 							marker.setVisible(false);
 							map.setCenter({lat: trail.style.center[1], lng: trail.style.center[0]});
 							infowindows[key].open(map, marker);
-
-							var coords = trailData[trail.style.num].geometry.coordinates;
-							var path = [];
-							_.forEach(coords, function(point, i) {
-								point.length = 2;
-								path.push(new google.maps.LatLng(point[1],point[0]));
-							});
-
-							drawPath(path);
 							activeKey = key;
 						}
 					})(trail, key, map));
@@ -252,76 +237,6 @@ function MainCtrl($scope, dataService) {
 			});
 		}
 
-		function drawPath(path) {
-			chart = new google.visualization.ColumnChart(document.getElementById('elevation_chart'));
-			var pathRequest = {
-				'path': path,
-				'samples': 256
-			};
-			elevator.getElevationAlongPath(pathRequest, plotElevation);
-		}
-
-		function plotElevation(results, status) {
-			if (status != google.maps.ElevationStatus.OK) {
-				return;
-			}
-			var elevations = results;
-			var elevationPath = [];
-			_.forEach(results, function(point, i){
-				elevationPath.push(elevations[i].location);
-			});
-
-			var data = new google.visualization.DataTable();
-			data.addColumn('string', 'Distance');
-			data.addColumn('number', 'Elevation');
-
-			var distance, prevLat, prevLng, currLat, currLng, p1, p2;
-			var distances = [];
-
-			_.forEach(results, function(point, i) {
-				prevIdx = (i > 0) ? i - 1 : i;
-
-				var p1 = new google.maps.LatLng(results[prevIdx].location.lat(), results[prevIdx].location.lng());
-				var p2 = new google.maps.LatLng(results[i].location.lat(), results[i].location.lng());
-
-				distance = (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) * 3.28084).toFixed(0);
-				distance = +distance;
-				if (i > 0) {
-					distances[i] = distances[i - 1] + distance;
-				}
-				else {
-					distances[i] = distance;
-				}
-			});
-
-			for (var i = 0; i < results.length; i++) {
-				data.addRow([distances[i].toString(), (elevations[i].elevation * 3.28084)]);
-			}
-
-			var elevationData = [];
-			_.forEach(elevations, function(elevationObj, i){
-				elevationData.push(elevationObj.elevation);
-			});
-			
-			var trailVert = ((_.max(elevationData) - _.min(elevationData)) * 3.28084).toFixed(0);
-			var trailLength = (_.max(distances) / 5280).toFixed(1);
-			var trailGrade = ((trailVert / _.max(distances)) * 100).toFixed(0);
-			var trailInfo =  trailVert + ' ft descent - ' + trailLength + ' miles - ' + trailGrade + '% Average Grade';
-
-			document.getElementById('elevation_container').style.display = 'block';
-			chart.draw(data, {
-				height: 150,
-				legend: 'none',
-				smoothLine: 'true',
-				titleFontSize: 12,
-				axisFontSize: 10,
-				title: trailInfo,
-				titleY: 'Elevation (ft)',
-				titleX: 'Distance (ft)',
-				enableTooltip: false
-			});
-
-		}
 
 		// $scope.toggleSegment() - show/hide certain segment
 		$scope.toggleSegment = function(toggledSegment) {

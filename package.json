@@ -1,15 +1,17 @@
 {
-	"name": "node-api",
-	"main": "server.js",
-	"version": "0.1.0",
-	"repository": {
-		"type": "git",
-		"url": "git://github.com/pdubs/angel-fire-map.git"
-	},
-	"dependencies": {
-		"express": "~4.0.0",
-		"mongoose": "~4.4.3",
-		"geolocation-marker": "~2.0.4",
-		"lodash": "^4.11.2"
-	}
+  "name": "node-api",
+  "main": "server.js",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pdubs/angel-fire-map.git"
+  },
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "~4.5.0",
+    "geolocation-marker": "~2.0.4",
+    "lodash": "^4.11.2",
+    "mongoose": "~4.4.3",
+    "path": "^0.12.7"
+  }
 }
