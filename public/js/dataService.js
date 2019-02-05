@@ -10,7 +10,7 @@ function dataService($http) {
 	};
 
 	function getTrailData() {
-		return $http.get('http://localhost:8080/api/trails/')
+		return $http.get('/api/trails/')
 			.then(getDataComplete);
 
 		function getDataComplete(response) {
