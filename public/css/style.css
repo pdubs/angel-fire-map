@@ -1,5 +1,8 @@
 html, body, #map-canvas {
 	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-moz-user-select: none;
@@ -7,10 +10,8 @@ html, body, #map-canvas {
 }
 
 body #map-canvas {
-	height: 100%;
-	top: 0px;
-	margin-left: 0;
-	margin-top: 0;
+	position: relative;
+	overflow-y: hidden;
 }
 
 body {
@@ -107,7 +108,7 @@ body #mapControlToggle a:hover {
 /* mapControls */
 body #mapControls .mapControl {
 	margin: 0 0 1px 0;
-  height: 12px;
+  	height: 12px;
 }
 
 body #mapControls .mapControl .trailRow {
@@ -272,7 +273,7 @@ body #elevation_container #elevation_chart {
 
 /* infoWindows */
 body .gm-style-iw {
-	
+
 }
 
 body .gm-style-iw .iw-content {
@@ -305,81 +306,158 @@ body .gm-style-iw .iw-content .iw-description {
 
 }
 
-/* mobile + tablet <1024px */
-@media (max-width: 1024px) {
-	html, body, #map-canvas {
-		top: 0;
-	}
-	
-	body #mapControls:target {
-	  width: 60%;
-	  overflow-y: auto;
-	}
-	body #mapControls:target + #map-canvas {
-	  width: 40%;
-	}
-	body #mapControls .closeControls {
-		width: 36px;
-		height: 40px;
-		font-size: 38px;
-		vertical-align: top;
-		line-height: 36px;
-		position: fixed;
-		left: 56%;
-		top: 1%;
-		opacity: 0.6;
-		z-index: 9999;
-	}
-	body #mapControls .diffHeader {
-		height: 28px;
-		margin: 5px 0;
-	}
-	body #mapControls .diffHeader label {
-	    display: block;
-	    width: 100%;
-	}
-	body #mapControls .diffHeader .diffControl {
-		width: 30px;
-		height: 26px;
-	}
-	body #mapControls .diffHeader .diffName {
-		font-size: 20px;	
-	}
-	body #mapControls .mapControl {
-		height: auto;
-		margin: 10px 0;
-	}
-	body #mapControls .mapControl .trailRow {
-		font-size: 28px;
-		width: 49%;
-		display: inline-block;
-		line-height: 40px;
-		font-weight: bold;
-	}
-	body #mapControls .mapControl .parkId {
-		width: 45px;
-	}
-	body #mapControls .mapControl input {
-		width: 40px;
-		margin: 0 10px;
-		height: 40px;
-	}
-	body #mapControlToggle a {
-		height: 32px;
-		width: 34px;
-		font-size: 36px;
-		line-height: 29px;
-	}
-	body #mapControls .allControls .showAllTrails,
-	body #mapControls .allControls .hideAllTrails {
-		font-size: 26px;
-		width: 49%;
-	}
-}
-
 /* desktop >1025px */
 @media (min-width: 1025px) {
 	body {
 		top: 0;
 	}
 }
+
+/*screens smaller than 1025px */
+
+@media screen and (max-width: 1025px) {
+
+	div#top-bar {
+		min-width: 100vw;
+		max-height: 10%;
+		min-height: 2.5em;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+		align-items: center;	
+	}
+
+	img#aflogo {
+		max-width: 10%;
+		min-width: 125px;
+		padding: 0 1em;
+		flex-grow: 1.5;
+	} 
+
+	div#mapControlToggle a {
+		max-width: 1em;
+		height: auto;
+		line-height: 1em;
+		position: static;
+		text-align: center;
+		vertical-align: middle;
+		padding: 0;
+		font-size: 1.25em;
+		text-indent: 0;
+		flex-grow: 1;
+	}
+
+	#mapControlToggle a {
+		width: 100%;
+		height: auto;
+		position: static ;
+	}
+
+	div#overlayControls {
+		vertical-align: middle;
+		min-width: 25%;
+		margin-left: .1em;
+		flex-grow: 1;
+		text-align: left;
+	
+	}
+
+	body #mapControls .closeControls {
+		width: 3%;
+		font-size: 1em;
+		height: auto;
+		vertical-align: middle;
+		position: static;
+		margin-right: 1em;
+	}
+}
+
+@media screen and (max-width: 415px) {
+
+	body #mapControls:target {
+	    width: 100vw;
+	    height: auto;
+	    display: flex;
+	    flex-direction: column;
+	    flex-wrap: wrap;
+	    justify-content: flex-start;
+	}
+
+	body #mapControls .closeControls {
+		align-self: flex-end;
+		padding-right: .5em;
+		font-size: 1.25em;
+	}
+
+	.mapDifficulty.ng-scope {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		flex-wrap: wrap;
+		width: 100vw;
+		margin: 0 auto;
+	}
+
+	.diffHeader {
+		width: 100%;
+	}
+
+	body #mapControls .mapControl {
+		height: 100%;
+	}
+
+	.mapControl.trail.ng-scope {
+		width: 50%;
+		display: flex;
+		flex-direction: row;
+	}
+
+	body #mapControls .diffHeader .diffControl {
+		vertical-align: middle;
+		padding-bottom: .25em;
+	}
+
+	body #mapControls .diffHeader .diffName {
+		font-size: 1em;	
+	}
+
+	body #mapControls .diffHeader {
+		height: auto;
+
+	}
+
+	.diffHeader.e label {
+		vertical-align: middle;
+
+	}
+
+	body #mapControls .mapControl .trailRow {
+		font-size: .75em;
+		width: 65%;
+		padding-bottom:.5em;
+	}
+
+
+	body #mapControls .allControls .showAllTrails,
+	body #mapControls .allControls .hideAllTrails {
+		font-size: 1em;
+		max-height: 17px;
+
+
+	}
+	input.segment.ng-scope  {
+		font-size: 2em;
+		display: inline;
+	}
+
+}
+
+
+
+
+
+
+
+
+
